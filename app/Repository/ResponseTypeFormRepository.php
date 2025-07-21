@@ -33,8 +33,6 @@ class ResponseTypeFormRepository implements ResponseTypeFormInterface
         return TypeFormResponse::whereId($typeFormResponseId)->update($updateTypeFormResponseDetails);
     }
 
-   
-
     public function checkTypeFormResponseDuplicate($typeFormeId,$typeFormResponseId){
         return TypeFormResponse::where('form_id',$typeFormeId)
                                 ->where('response_id',$typeFormResponseId)

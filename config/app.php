@@ -53,6 +53,8 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'asset' => env('APP_URL', 'https://eager-ray-next.ngrok-free.app/'),
+
 
     /*
     |--------------------------------------------------------------------------

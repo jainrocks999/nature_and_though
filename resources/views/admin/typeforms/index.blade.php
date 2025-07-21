@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-lg-2">
                         <a   href="{{route('typeform.cloneTypeFormData')}}">
-                            <button class="btn btn-success create-btn" id="refreshBtn">Sync</button>
+                            <button class="btn btn-success create-btn" id="refreshBtn"><i class="la la-refresh"></i>Sync</button>
                         </a>
                     </div>
                 </div>
@@ -65,3 +65,4 @@
     </div>
 </div>
 @endsection
+@extends('layouts.footer')

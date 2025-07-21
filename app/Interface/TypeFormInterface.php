@@ -6,10 +6,12 @@ interface TypeFormInterface
 {
     public function getAllTypeForms();
     public function getTypeFormById($typeFormId);
+    public function getTypeFormByWhere($where);
     public function deleteTypeForm($typeFormId);
     public function createTypeForm(array $createTypeFormDetails);
     public function updateTypeForm($typeFormId, array $updateTypeFormDetails);
     public function getFulfilledTypeForms();
     public function checkTypeFormDuplicate($typeFormId);
+    
   
 }

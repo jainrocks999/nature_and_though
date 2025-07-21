@@ -59,7 +59,7 @@
 				</nav>
 			</div>
  			@include('partials.menu')
-			<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
+			<!-- <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header bg-primary">
@@ -78,7 +78,20 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
+			@if(session('success'))
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					{{ session('success') }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			@endif
+
+			@if(session('error'))
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					{{ session('error') }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			@endif
 			<div class="main-panel">
 				<main>
 					@yield('content') 
@@ -86,6 +99,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- </body>
 	 <script src="assets/js/core/jquery.3.2.1.min.js"></script>
 	 <script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 	 <script src="assets/js/core/popper.min.js"></script>
@@ -100,8 +114,7 @@
 	 <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 	 <script src="assets/js/ready.min.js"></script>
 	 <script src="assets/js/demo.js"></script>
-</body>
-</html>
+</html> -->
 			
 		
 			

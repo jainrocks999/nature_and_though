@@ -19,7 +19,10 @@
                                 <li class="nav-item">
                                         <a class="nav-link" href="{{ route('typeform.getTypeFormData')}}">Type Form List </a>
                                 </li>    
-                                <li class="nav-item">
+                                 <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('surveyConfig.getSurveyConfig')}}">Survey Configuration List </a>
+                                </li>    
+                                <!-- <li class="nav-item">
                                         <a class="nav-link" href="manage-survey.html">Pre-Purchase Survey </a>
                                 </li>    
                                 <li class="nav-item">
@@ -27,7 +30,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="manage-survey.html">Post Survey Schedule</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </li>

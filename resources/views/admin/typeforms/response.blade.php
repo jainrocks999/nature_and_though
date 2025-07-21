@@ -7,11 +7,21 @@
             <div class="card-header">
                 <div class="card-title" >Type Form Response List</div>
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-10">
                         <form method="GET" action="">
                             <div class="row">
                                 <div class="col-md-4">
                                     <input type="text" name="search" class="form-control" placeholder="Search..." value="{{ request('search') }}">
+                                </div>
+                                <div class="col-md-4">
+                                     <select name="type_form_id" id="type_form_id" class="form-control ">
+                                        <option value="">Select type Form</option>
+                                        @if(isset($data['typeFormLists']) && !empty($data['typeFormLists']))
+                                            @foreach($data['typeFormLists'] as $val)
+                                            <option value="{{$val->type_form_id}}" {{ $data['selected_typeform_id'] == $val->type_form_id ? 'selected' : '' }}><?php echo $val->title; ?> </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="submit" class="btn btn-primary">Search</button>
@@ -19,6 +29,11 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                     <div class="col-lg-2">
+                        <a   href="{{route('typeform.cloneAllTypeFormResponse')}}">
+                            <button class="btn btn-success create-btn" id="refreshBtn"><i class="la la-refresh"></i>Sync</button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -66,3 +81,4 @@
     </div>
 </div>
 @endsection
+@extends('layouts.footer')

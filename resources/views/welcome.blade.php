@@ -86,3 +86,5 @@
 				</div>
 			</div>
 @endsection
+</div></div>
+@extends('layouts.footer')

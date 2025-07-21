@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
          Schema::create('survey_config_tbl', function (Blueprint $table) {
-            $table->id('survey_id'); 
+            $table->id('id'); 
             $table->integer('user_id');
             $table->string('landing_id');
             $table->string('token');

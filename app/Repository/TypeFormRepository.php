@@ -18,6 +18,11 @@ class TypeFormRepository implements TypeFormInterface
         return TypeForm::findOrFail($typeFormId);
     }
 
+    public function getTypeFormByWhere($where) 
+    {
+        return TypeForm::where($where)->first();
+    }
+
     public function deleteTypeForm($typeFormId) 
     {
         TypeForm::destroy($typeFormId);

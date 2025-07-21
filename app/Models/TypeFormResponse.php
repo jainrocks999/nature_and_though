@@ -28,6 +28,8 @@ class TypeFormResponse extends Model
     ];
 
     function setParams($formData, $postData){
+        $answer = json_encode($postData->answers);
+        // $results = $this->useradd($answer);
         return [
             'response_id' => $postData->response_id,
             'response_type' => $postData->response_type,
@@ -43,5 +45,28 @@ class TypeFormResponse extends Model
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ];
+    }
+    
+    public function useradd($postData){
+        $decodeRes = json_decode($postData);
+        $params = [];
+        if(isset($decodeRes) && $decodeRes){
+            foreach($decodeRes as $val){
+                if(isset($val->field) && $val->field->type == "rating"){
+                    $params[$val->field->type] = $val->number;
+                }
+                if(isset($val->field) && $val->field->type == "short_text"){
+                    $params['name'] = $val->text;
+                }
+                if(isset($val->field) && $val->field->type == "short_text"){
+                    $params['name'] = $val->text;
+                }
+            }
+        }
+        $results = User::where('id',$user_id)->first();
+        if($results){
+            $results->name = $postData['name'];
+        }
+        return true;
     }
 }

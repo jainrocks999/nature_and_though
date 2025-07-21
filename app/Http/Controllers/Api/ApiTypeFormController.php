@@ -16,7 +16,7 @@ class ApiTypeFormController extends Controller
     public function cloneTypeFormData(Request $request)
     {
         $results =  $this->masterService->cloneTypeFormData($request->all());
-        dd($results);
+        return $results;
     }
 
 

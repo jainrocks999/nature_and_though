@@ -13,7 +13,7 @@ return new class extends Migration
     {
           Schema::create('survey_product_suggestion_tbl', function (Blueprint $table) {
             $table->id('product_suggestion_id'); 
-            $table->integer('survey_id');
+            $table->integer('id');
             $table->integer('product_type');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('last_updated_at')->nullable();

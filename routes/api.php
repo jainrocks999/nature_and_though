@@ -10,4 +10,9 @@ Route::get('/test', function () {
     return response()->json(['message' => 'It works!']);
 });
 
-Route::post('/webhooks/typeform', [TypeformWebhookController::class, 'webhooksHandle']);
+//Webhooks
+Route::post('/webhooks/typeform', [TypeformWebhookController::class, 'typeFormWebhooksHandle']);
+Route::post('/webhooks/shopify-order-handle', [TypeformWebhookController::class, 'shopifyOrderWebhooksHandle']);
+Route::post('/webhooks/shopify-customer-handle', [TypeformWebhookController::class, 'shopifyCustomerWebhooksHandle']);
+Route::post('/webhooks/shopify-product-handle', [TypeformWebhookController::class, 'shopifyProductWebhooksHandle']);
+
