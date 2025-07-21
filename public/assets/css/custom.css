@@ -38,3 +38,17 @@
 .required-star {
     color: rgb(241, 67, 67);
 }
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+     width: 100% !important;
+}
+
+.select2-container .select2-selection--multiple {
+   
+    min-height: 38px;
+   
+}
+.select2-container {
+    min-width: 100%;
+    width: 100% !important;
+}

@@ -11,6 +11,7 @@ Route::get('/', function () {
 })->middleware(['verify.shopify'])->name('home');
 
 
+//Type form url
 Route::get('/dashboard', [MasterController::class, 'dashboard'])->name('dashboard');
 Route::get('/type-form-list', [TypeFormController::class, 'getTypeFormData'])->name('typeform.getTypeFormData');
 Route::get('/clone-typeform-data', [TypeFormController::class, 'cloneTypeFormData'])->name('typeform.cloneTypeFormData');
