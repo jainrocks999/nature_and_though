@@ -19,6 +19,11 @@ class ProductRepository implements ProductInterface
         return Product::findOrFail($productId);
     }
 
+    public function getProductByWhereId($shopifyProductId) 
+    {
+        return Product::where('shopify_product_id',$shopifyProductId)->first();
+    }
+
      public function getProductByWhere($where) 
     {
         return Product::where($where)->get();
@@ -36,8 +41,10 @@ class ProductRepository implements ProductInterface
 
     public function updateProduct($productId, array $updateProductDetails) 
     {
-        return Product::whereId($productId)->update($updateProductDetails);
+        return Product::whereId('shopify_product_id',$productId)->update($updateProductDetails);
     }
+
+
 
 
 

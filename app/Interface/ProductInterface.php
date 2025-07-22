@@ -6,6 +6,7 @@ interface ProductInterface
 {
     public function getAllProduct();
     public function getProductById($productId);
+    public function getProductByWhereId($shopifyProductId);
     public function getProductByWhere($where);
     public function deleteProduct($productId);
     public function createProduct(array $createProductDetails);

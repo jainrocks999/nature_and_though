@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\TypeFormController;
 use App\Http\Controllers\Admin\SurveyConfigController;
+use App\Http\Controllers\Admin\ProductController;
 
 
 Route::get('/', function () {
@@ -11,7 +12,7 @@ Route::get('/', function () {
 })->middleware(['verify.shopify'])->name('home');
 
 
-//Type form url
+//TypeForm url
 Route::get('/dashboard', [MasterController::class, 'dashboard'])->name('dashboard');
 Route::get('/type-form-list', [TypeFormController::class, 'getTypeFormData'])->name('typeform.getTypeFormData');
 Route::get('/clone-typeform-data', [TypeFormController::class, 'cloneTypeFormData'])->name('typeform.cloneTypeFormData');
@@ -28,7 +29,14 @@ Route::get('/survey-config-edit', [SurveyConfigController::class, 'editSurveyCon
 Route::post('/survey-config-update', [SurveyConfigController::class, 'updateSurveyConfig'])->name('surveyConfig.updateSurveyConfig');
 Route::get('/survey-config-delete/{id}', [SurveyConfigController::class, 'deleteSurveyConfig'])->name('surveyConfig.deleteSurveyConfig');
 
+//Survey Response
+Route::get('/survey-result-list', [SurveyConfigController::class, 'getSurveyResults'])->name('surveyResults.getSurveyResults');
 
+
+
+//Product list
+Route::get('/product-list', [ProductController::class, 'getProductList'])->name('product.getProductList');
+Route::get('/all-product-get-shopify', [ProductController::class, 'getAllProductListShopify'])->name('product.getAllProductListShopify');
 
 
 

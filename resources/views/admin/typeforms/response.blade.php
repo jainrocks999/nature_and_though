@@ -5,7 +5,7 @@
        
         <div class="card">
             <div class="card-header">
-                <div class="card-title" >Type Form Response List</div>
+                <div class="card-title" >TypeForm Response List</div>
                 <div class="row">
                     <div class="col-lg-10">
                         <form method="GET" action="">
@@ -15,7 +15,7 @@
                                 </div>
                                 <div class="col-md-4">
                                      <select name="type_form_id" id="type_form_id" class="form-control ">
-                                        <option value="">Select type Form</option>
+                                        <option value="">Select TypeForm</option>
                                         @if(isset($data['typeFormLists']) && !empty($data['typeFormLists']))
                                             @foreach($data['typeFormLists'] as $val)
                                             <option value="{{$val->type_form_id}}" {{ $data['selected_typeform_id'] == $val->type_form_id ? 'selected' : '' }}><?php echo $val->title; ?> </option>

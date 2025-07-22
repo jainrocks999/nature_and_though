@@ -8,7 +8,9 @@ class MasterService
     public function __construct(TypeFormInterface $typeFormInterface)
     {
         $this->accessToken = env('PERSONAL_ACCESS_TOKEN');
-        $this->baseUrl = env('TYPEFORM_URL');
+        $this->baseUrlTypeForm = env('TYPEFORM_URL');
+        $this->baseUrlShopify = env('SHOPIFY_BASE_URL');
+        $this->XShopifyAccessToken = env('XSHOPIFY_STOREFRONT_ACCESSTOKEN');
         $this->typeFormInterface = $typeFormInterface;
     }
 
@@ -16,7 +18,7 @@ class MasterService
     function adminDetails() {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => $this->baseUrl.'/me',
+        CURLOPT_URL => $this->baseUrlTypeForm.'/me',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -35,11 +37,11 @@ class MasterService
     }
 
 
-    //Clone type form data
+    //Clone TypeForm data
     function getTypeFormData(){
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => $this->baseUrl.'/forms?page=1&page_size=100',
+        CURLOPT_URL => $this->baseUrlTypeForm.'/forms?page=1&page_size=100',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -62,7 +64,7 @@ class MasterService
      //   $formId = 'k1mwz61y';
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => $this->baseUrl."/forms/{$formId}/responses",
+        CURLOPT_URL => $this->baseUrlTypeForm."/forms/{$formId}/responses",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -81,4 +83,25 @@ class MasterService
     }
     
     
+    function getAllProductShopify(){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $this->baseUrlShopify.'/admin/api/2024-04/products.json',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'X-Shopify-Access-Token: '.$this->XShopifyAccessToken,
+        ),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $results = json_decode($response);
+        return ['status'=>$response, 'data'=>$results];
+        return $results;
+    }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TypeForm;
 use Illuminate\Http\Request;
 use App\Models\SurveyConfig;
+use App\Models\SurveyResult;
 use App\Services\ConfigSurveyService;
 use App\Interface\TypeFormInterface;
 use App\Interface\ResponseTypeFormInterface;
@@ -17,7 +18,7 @@ class SurveyConfigController extends Controller
         $this->surveyConfig = $surveyConfig;    
     }
      
-    //Type form response
+    //TypeForm response
     public function getSurveyConfig(Request $request)
     {
       $query = SurveyConfig::query();
@@ -195,6 +196,31 @@ class SurveyConfigController extends Controller
             session()->flash('error', 'Something went wrong.');
             return redirect()->back()->withInput();
         }
+    }
+
+
+    //Survey Response
+    public function getSurveyResults(Request $request)
+    {
+      $query = SurveyResult::query();
+        if ($request->has('search') && $request->search != '') {
+            $search = strtolower($request->search);
+            $query->where(function($q) use ($search) {
+                $q->where('score', 'LIKE', "%$search%");
+                $q->OrWhere('min_score', 'LIKE', "%$search%");
+                $q->OrWhere('max_score', 'LIKE', "%$search%");
+                $q->OrWhere('reward_points', 'LIKE', "%$search%");
+                $q->OrWhere('status', 'LIKE', "%$search%");
+            });
+        }
+        $sortField = $request->get('sort_by', 'id');
+        $sortOrder = $request->get('order', 'desc');
+        $query->orderBy($sortField, $sortOrder);
+        $results = $query->paginate(10)->appends($request->all());
+        $data =  [];
+        $data['typeFormLists'] = $this->configSurveyService->getAllTypeForms();
+        $data['selected_typeform_id'] = isset($request->type_form_id) ? $request->type_form_id : "";
+        return view('admin.surveyresults.index', compact('results', 'data'));
     }
    
 }

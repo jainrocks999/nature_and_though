@@ -4,7 +4,7 @@
 	<div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="card-title" >Type Form List Search</div>
+                <div class="card-title" >Typeform List Search</div>
                 <div class="row">
                     <div class="col-lg-10">
                         <form method="GET" action="">

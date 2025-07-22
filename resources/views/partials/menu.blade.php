@@ -17,15 +17,18 @@
                         <div class="collapse" id="submenuSurvey">
                             <ul class="nav flex-column ml-3">
                                 <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('typeform.getTypeFormData')}}">Type Form List </a>
-                                </li>    
-                                 <li class="nav-item">
                                         <a class="nav-link" href="{{ route('surveyConfig.getSurveyConfig')}}">Survey Configuration List </a>
-                                </li>    
-                                <!-- <li class="nav-item">
-                                        <a class="nav-link" href="manage-survey.html">Pre-Purchase Survey </a>
+                                </li>  
+                                 <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('typeform.getTypeFormData')}}">Typeform List </a>
                                 </li>    
                                 <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('product.getProductList')}}">Product List </a>
+                                </li>      
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('surveyResults.getSurveyResults')}}">Survey Results </a>
+                                </li>   
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" href="manage-survey.html">Post-Purchase Survey </a>
                                 </li>
                                 <li class="nav-item">
@@ -43,7 +46,7 @@
                         <div class="collapse" id="submenuSurveyResponse">
                             <ul class="nav flex-column ml-3"> 
                                  <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('typeform.getTypeFormResponse')}}">Type Form Response List</a>
+                                    <a class="nav-link" href="{{ route('typeform.getTypeFormResponse')}}">TypeForm Response List</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="create-survey.html">Pre-Survey Response</a>

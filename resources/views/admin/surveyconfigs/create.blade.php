@@ -52,9 +52,9 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-lg-12" id="subinpt">
-                            <label for="type_form_id" class="form-label">Type Form</label>
+                            <label for="type_form_id" class="form-label">TypeForm</label>
                             <select name="type_form_id" id="type_form_id" class="form-control">
-                                <option value="">Select Type Form</option>
+                                <option value="">Select TypeForm</option>
                                 @if(isset($data['typeForms']) && !empty($data['typeForms']))
                                     @foreach($data['typeForms'] as $val)
                                         <option value="{{ $val->type_form_id }}">{{ $val->title }}</option>
@@ -68,9 +68,9 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-lg-12" id="subinpt">
-                            <label for="type_form_type" class="form-label">Type Form Type</label>
+                            <label for="type_form_type" class="form-label">TypeForm Type</label>
                            <select name="type_form_type" id="type_form_type" class="form-control">
-                                <option value="">Select Type Form</option>
+                                <option value="">Select TypeForm</option>
                                 @if(isset($data['typeFormstypes']) && !empty($data['typeFormstypes']))
                                     @foreach($data['typeFormstypes'] as $val)
                                         @if(!in_array($val->type_form_type, $shownTypes))
@@ -466,12 +466,12 @@
 
         if (!typeForm) {
             isValid = false;
-            messages.push("Type Form is required.");
+            messages.push("TypeForm is required.");
         }
 
         if (!typeFormType) {
             isValid = false;
-            messages.push("Type Form Type is required.");
+            messages.push("TypeForm Type is required.");
         }
 
         if (!surveyType) {

@@ -10,7 +10,7 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\TypeformResponse;
 use App\Services\WebHookServices;
-class TypeformWebhookController extends Controller
+class WebhookController extends Controller
 {
     public function __construct(WebHookServices $webHookServices)
     {
@@ -81,6 +81,8 @@ class TypeformWebhookController extends Controller
             $params['product_category'] = !empty($postData->category) ? json_encode($postData->category) : "";
             $params['product_collection'] = !empty($postData->collection) ? $postData->collection : "";
             $params['product_tag'] = !empty($postData->tags) ? $postData->tags : "";
+            $params['product_sku'] = !empty($postData->variants[0]->sku) ? $postData->variants[0]->sku : "";
+            $params['product_price'] = !empty($postData->variants[0]->price) ? $postData->variants[0]->price : "";
             $params['product_variants'] = !empty($postData->variants) ? json_encode($postData->variants) : "";
             $params['product_additional'] = !empty($postData->additional) ? $postData->additional : "" ;
             $params['product_images'] = !empty($postData->images) ? json_encode($postData->images) : "";

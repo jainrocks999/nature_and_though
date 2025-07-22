@@ -20,7 +20,7 @@ class TypeFormController extends Controller
         $this->responseTypeFormInterface = $responseTypeFormInterface;    
     }
      
-    //Type form response
+    //TypeForm response
     public function getTypeFormData(Request $request)
     {
        $query = TypeForm::query();
@@ -39,7 +39,7 @@ class TypeFormController extends Controller
         return view('admin.typeforms.index', compact('results'));
     }
 
-    //Type form get data in typeform
+    //TypeForm get data in typeform
     public function cloneTypeFormData(Request $request)
     {
         $typeFromResults =  $this->masterService->getTypeFormData($request->all());
@@ -60,7 +60,7 @@ class TypeFormController extends Controller
     }
 
 
-    //Type Form Response List
+    //TypeForm Response List
     public function getTypeFormResponse(Request $request)
     {
       $query = TypeFormResponse::query();
@@ -93,7 +93,7 @@ class TypeFormController extends Controller
     
 
 
-     //Type form get data in typeform reponse
+     //TypeForm get data in typeform reponse
     public function cloneAllTypeFormResponse(Request $request)
     {
         $typeFromResults =  $this->masterService->getTypeFormData($request->all());
@@ -125,7 +125,7 @@ class TypeFormController extends Controller
         return redirect()->route("typeform.getTypeFormResponse");
     }
 
-    //Get A single type form list
+    //Get A single TypeForm list
     public function getSingleTypeFormResponse($typeFormId){
        $checkingTypeForm = $this->typeFormInterface->getTypeFormById($typeFormId);
        if(isset($checkingTypeForm) && !empty($checkingTypeForm)){

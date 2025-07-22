@@ -33,7 +33,7 @@ class ConfigSurveyService
         public function getAllTypeForms(){
         return $this->typeFormInterface->getAllTypeForms();
     }
-        //Single Type Form get
+        //Single TypeForm get
         public function getTypeFormByWhere($where){
         return $this->typeFormInterface->getTypeFormByWhere($where);
     }
@@ -71,9 +71,17 @@ class ConfigSurveyService
         public function getAllProduct(){
         return $this->productInterface->getAllProduct();
     }
-
+      public function getProductByWhereId($shopifyProductId){
+        return $this->productInterface->getProductByWhereId($shopifyProductId);
+    }
        public function getProductByWhere($where){
         return $this->productInterface->getProductByWhere($where);
+    }
+      public function createProduct($postData){
+        return $this->productInterface->createProduct($postData);
+    }
+      public function updateProduct($shopifyProductId, $postData){
+        return $this->productInterface->updateProduct($shopifyProductId, $postData);
     }
 
 
