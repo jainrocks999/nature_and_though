@@ -8,19 +8,28 @@ class SurveyResult extends Model
 {
     protected $table = 'survey_response_tbl';
     protected $fillable = [
-     'survey_id',
+      'id',
+      'survey_id',
       'user_id',
-      'score',
-      'min_score',
-      'max_score',
-      'reward_type',
+      'user_type',
+      'survey_type',
+      'user_name',
+      'user_email',
+      'user_phone',
+      'email_status',
+      'pushnotification_status',
+      'typeform_title',
+      'typeform_type',
+      'discount_code',
+      'discount_type',
+      'discount_price',
       'reward_points',
-      'discounct_code_id',
-      'product_ids',
+      'score',
+      'response_type',
+      'response_time',
       'status',
       'created_at',
-      'updated_at',
-
+      'updated_at'
     ];
 
 }

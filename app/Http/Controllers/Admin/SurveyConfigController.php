@@ -176,8 +176,6 @@ class SurveyConfigController extends Controller
                 }
             }
 
-          
-
             session()->flash('success', 'Survey Configuration updated successfully.');
             return redirect()->route('surveyConfig.getSurveyConfig');
         }
@@ -206,10 +204,17 @@ class SurveyConfigController extends Controller
         if ($request->has('search') && $request->search != '') {
             $search = strtolower($request->search);
             $query->where(function($q) use ($search) {
-                $q->where('score', 'LIKE', "%$search%");
-                $q->OrWhere('min_score', 'LIKE', "%$search%");
-                $q->OrWhere('max_score', 'LIKE', "%$search%");
+                $q->where('user_name', 'LIKE', "%$search%");
+                $q->OrWhere('user_email', 'LIKE', "%$search%");
+                $q->OrWhere('user_phone', 'LIKE', "%$search%");
+                $q->OrWhere('survey_type', 'LIKE', "%$search%");
+                $q->OrWhere('typeform_title', 'LIKE', "%$search%");
+                $q->OrWhere('email_status', 'LIKE', "%$search%");
+                $q->OrWhere('discount_code', 'LIKE', "%$search%");
+                $q->OrWhere('discount_type', 'LIKE', "%$search%");
+                $q->OrWhere('score', 'LIKE', "%$search%");
                 $q->OrWhere('reward_points', 'LIKE', "%$search%");
+                $q->OrWhere('response_type', 'LIKE', "%$search%");
                 $q->OrWhere('status', 'LIKE', "%$search%");
             });
         }
@@ -223,4 +228,8 @@ class SurveyConfigController extends Controller
         return view('admin.surveyresults.index', compact('results', 'data'));
     }
    
+
+    // public function getSurveyUserResults(Request $request){
+
+    // }
 }

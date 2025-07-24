@@ -10,11 +10,15 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\TypeformResponse;
 use App\Services\WebHookServices;
+use App\Services\MasterService;
+use App\Services\ConfigSurveyService;
 class WebhookController extends Controller
 {
-    public function __construct(WebHookServices $webHookServices)
+    public function __construct(WebHookServices $webHookServices,MasterService $masterService, ConfigSurveyService $configSurveyService)
     {
         $this->webHookServices = $webHookServices;
+        $this->masterService = $masterService;
+        $this->configSurveyService = $configSurveyService;
     }
     
     //Typeform Webhooks
@@ -22,16 +26,96 @@ class WebhookController extends Controller
     {
         $data = $request->getContent();
         $results = json_decode($data);
-        $resultData =  DB::table('webhook_log')->insert([
+        $params = [
             'type_form_id' => $results->form_response->form_id,
             'type_form_title' => $results->form_response->definition->title,
             'type_form_type' => $results->event_type,
             'request' => $results->form_response->definition->title,
             'response' => $data,
             'created_at' => date('Y-m-d H:i:s')
-        ]);
-        return $resultData;
+        ];
+        DB::table('webhook_log')->insert($params);
+        $resData = $this->storeSurveyConfigData($results->form_response);
+        return $resData;
     }
+
+    public function storeSurveyConfigData($postData){
+        $params = [];
+        if(isset($postData) && !empty($postData)){
+            $typeFormId = $postData->form_id;
+            $surveyResults = $this->configSurveyService->getSurveyConfigByWhereId('type_form_id',$typeFormId);
+            if(isset($surveyResults) && !empty($surveyResults)){                
+                $answers = $postData->answers;
+                if(isset($answers) && !empty($answers)){
+                    $uParams = [];
+                    foreach ($answers as $answer) {
+                        if ($answer->type == "text") {
+                            if (empty($uParams['name'])) {
+                                $uParams['name'] = $answer->text." ";
+                            }else {
+                                $uParams['name'] .= $answer->text . ' ';
+                            // $uParams['lastname'] = $answer->text . ' ';
+                            }
+                        }
+                        if ($answer->type == "phone_number") {
+                            $uParams['phone_no'] = $answer->phone_number;
+                        }
+                        if ($answer->type == "email") {
+                            $uParams['email'] = $answer->email;
+                        }
+                    }
+                }else{
+                    $responses =  ['status'=>202, 'msg'=>'answer not fount.'];
+                    return json_encode($responses);
+                }
+               $users = $this->configSurveyService->getUserByWhereId('email', $uParams['email']);
+               if(isset($users)) {
+                    $uParams['user_id'] = $users->id;
+                }else{
+                    $uParams['password'] = Hash::make("123456");
+                    $results = $this->webHookServices->insertGetId('users', $uParams);
+                    if($results){
+                        $users = $this->configSurveyService->getUserByWhereId('email', $uParams['email']);
+                        $uParams['user_id'] = $users->id;
+                    }
+                } 
+               $params['survey_id'] = $surveyResults->id;
+               $params['user_id'] = $uParams['user_id'];
+               $params['user_type'] = $surveyResults->user_type;
+               $params['survey_type'] = $surveyResults->survey_type;
+               $params['user_name'] = $uParams['name'];
+               $params['user_email'] = $uParams['email'];
+               $params['user_phone'] = $uParams['phone_no'];
+               $params['email_status'] = $surveyResults->selected_email;
+               $params['pushnotification_status'] = $surveyResults->survey_notification_status;
+               $params['typeform_title'] = $surveyResults->type_form_title;
+               $params['typeform_type'] = $surveyResults->type_form_type;
+               $params['discount_code'] = $surveyResults->discount_code;
+               $params['discount_type'] = $surveyResults->discount_type;
+               $params['discount_price'] = $surveyResults->discount_value;
+               $params['reward_points'] = $surveyResults->reward_points;
+               $params['score'] = $postData->calculated->score;
+               $params['response_type'] = "completed";
+               $params['response_time'] = $postData->submitted_at;
+               $params['status'] = "completed";
+               $params['created_at'] = date('Y-m-d H:i:s');
+               $results = $this->configSurveyService->createSurveyResult($params);
+               $responses = ['status'=>200,'data'=>$results,'msg'=>'Survey Results create successFully..!'];
+               return json_encode($responses);
+            }else{
+                $responses =  ['status'=>201, 'msg'=>'Survey not found.'];
+                return json_encode($responses);
+            }
+            $responses = ['status'=>500,'msg'=>'Something went to wrong'];
+            return json_encode($responses);
+        }else{
+            $responses = ['status'=>500,'msg'=>'Internal server error'];
+            return json_encode($responses);
+        }
+    }
+
+    
+   
 
     //Shopify webhooks
     public function shopifyOrderWebhooksHandle(Request $request)

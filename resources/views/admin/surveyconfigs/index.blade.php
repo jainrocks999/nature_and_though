@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title" >Survey Config Search</div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-lg-10">
                         <form method="GET" action="">
                             <div class="row">
@@ -22,6 +22,26 @@
                     <div class="col-lg-2">
                         <a   href="{{route('surveyConfig.createSurveyConfig')}}">
                             <button class="btn btn-success create-btn" id="refreshBtn"><i class="la la-plus"></i> Create</button>
+                        </a>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-lg-10">
+                        <form method="GET" action="">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="text" name="search" class="form-control" placeholder="Search..." value="{{ request('search') }}">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                    <a href="{{ route('surveyConfig.getSurveyConfig') }}" class="btn btn-secondary">Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-2">
+                        <a   href="{{route('surveyConfig.createSurveyConfig')}}">
+                            <button class="btn btn-success create-btn" id="refreshBtn"><i class="la la-refresh"></i>Sync</button>
                         </a>
                     </div>
                 </div>

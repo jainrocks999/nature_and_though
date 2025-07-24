@@ -18,6 +18,11 @@ class UserRepository implements UserInterface
         return User::findOrFail($userId);
     }
 
+    public function getUserByWhereId($where, $userId) 
+    {
+        return User::where($where, $userId)->first();
+    }
+
     public function deleteUser($userId) 
     {
         User::destroy($userId);

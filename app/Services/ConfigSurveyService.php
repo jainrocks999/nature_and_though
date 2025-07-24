@@ -38,49 +38,77 @@ class ConfigSurveyService
         return $this->typeFormInterface->getTypeFormByWhere($where);
     }
 
+  
+
+
 
 
 
     //Survey Config method provide
-        public function getAllSurveyConfig(){
+    public function getAllSurveyConfig(){
         return $this->surveyConfigInterface->getAllSurveyConfig();
     }
-        public function getSurveyConfigById($surveyId){
+    public function getSurveyConfigById($surveyId){
         return $this->surveyConfigInterface->getSurveyConfigById($surveyId);
+    }  
+    public function getSurveyConfigByWhereId($where, $surveyId){
+        return $this->surveyConfigInterface->getSurveyConfigByWhereId($where, $surveyId);
     }
-        public function createSurveyConfig($postdata){
+    public function getSurveyConfigByWhere($where){
+        return $this->surveyConfigInterface->getSurveyConfigByWhere($where);
+    }
+    public function createSurveyConfig($postdata){
         return $this->surveyConfigInterface->createSurveyConfig($postdata);
     }
-       public function updateSurveyConfig($surveyId, $postdata){
+    public function updateSurveyConfig($surveyId, $postdata){
         return $this->surveyConfigInterface->updateSurveyConfig($surveyId, $postdata);
     }
-        public function deleteSurveyConfig($surveyId){
+    public function deleteSurveyConfig($surveyId){
         return $this->surveyConfigInterface->deleteSurveyConfig($surveyId);
     }
 
-
+    //Survey Config results
+    public function getAllSurveyResult(){
+        return $this->surveyConfigInterface->getAllSurveyResult();
+    }
+    public function getSurveyResultByWhereId($where, $surveyId){
+        return $this->surveyConfigInterface->getSurveyResultByWhereId($where, $surveyId);
+    }
+    public function getSurveyResultByWhere($where){
+        return $this->surveyConfigInterface->getSurveyResultByWhere($where);
+    }
+    public function createSurveyResult($createSurveyConfigDetails){
+        return $this->surveyConfigInterface->createSurveyResult($createSurveyConfigDetails);
+    }
 
 
 
 
 
     //Product method
-        public function getAllUser(){
+    public function getAllUser(){
         return $this->userInterface->getAllUser();
     }
-        public function getAllProduct(){
+    public function getUserByWhereId($where, $userId){
+        return $this->userInterface->getUserByWhereId($where, $userId);
+    }
+
+
+
+    //Products Method
+    public function getAllProduct(){
         return $this->productInterface->getAllProduct();
     }
-      public function getProductByWhereId($shopifyProductId){
+    public function getProductByWhereId($shopifyProductId){
         return $this->productInterface->getProductByWhereId($shopifyProductId);
     }
-       public function getProductByWhere($where){
+    public function getProductByWhere($where){
         return $this->productInterface->getProductByWhere($where);
     }
-      public function createProduct($postData){
+    public function createProduct($postData){
         return $this->productInterface->createProduct($postData);
     }
-      public function updateProduct($shopifyProductId, $postData){
+    public function updateProduct($shopifyProductId, $postData){
         return $this->productInterface->updateProduct($shopifyProductId, $postData);
     }
 
@@ -88,18 +116,16 @@ class ConfigSurveyService
 
 
     //product suggestion method
-        public function getProductSugByWhere($where){
+    public function getProductSugByWhere($where){
         return $this->productInterface->getProductSugByWhere($where);
     }
-
-        public function deleteProductSug($productSugId){
+    public function deleteProductSug($productSugId){
         return $this->productInterface->deleteProductSug($productSugId);
     }
-        public function createProductSuggestion($postData){
+    public function createProductSuggestion($postData){
         return $this->productInterface->createProductSuggestion($postData);
     }
-
-      public function updateProductSuggestion($productSugId, $postData){
+    public function updateProductSuggestion($productSugId, $postData){
         return $this->productInterface->updateProductSuggestion($productSugId, $postData);
     }
 

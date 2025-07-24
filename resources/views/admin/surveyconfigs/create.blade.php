@@ -261,7 +261,7 @@
                             @enderror
                         </div>
                         <div class="col-lg-6">
-                            <label for="reward_points" class="form-label">Results Based Rewords Points</label>
+                            <label for="reward_points" class="form-label">Specific Survey Based Rewords Points</label>
                             <input type="number" min="1" name="reward_points" id="reward_points" class="form-control"
                                 value="{{ old('reward_points') }}">
                             @error('reward_points')

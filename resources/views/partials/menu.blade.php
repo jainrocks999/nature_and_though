@@ -25,9 +25,7 @@
                                 <li class="nav-item">
                                         <a class="nav-link" href="{{ route('product.getProductList')}}">Product List </a>
                                 </li>      
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('surveyResults.getSurveyResults')}}">Survey Results </a>
-                                </li>   
+                             
                                 <!-- <li class="nav-item">
                                     <a class="nav-link" href="manage-survey.html">Post-Purchase Survey </a>
                                 </li>
@@ -45,7 +43,10 @@
                         </a>
                         <div class="collapse" id="submenuSurveyResponse">
                             <ul class="nav flex-column ml-3"> 
-                                 <li class="nav-item">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('surveyResults.getSurveyResults')}}">Survey Results </a>
+                                </li>   
+                                 <!-- <li class="nav-item">
                                     <a class="nav-link" href="{{ route('typeform.getTypeFormResponse')}}">TypeForm Response List</a>
                                 </li>
                                 <li class="nav-item">
@@ -53,7 +54,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="manage-survey.html">Post-Survey Response</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </li>

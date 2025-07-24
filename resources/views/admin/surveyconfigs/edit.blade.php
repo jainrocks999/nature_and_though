@@ -343,7 +343,7 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <label for="reward_points" class="form-label">Results Based Reward Points</label>
+                            <label for="reward_points" class="form-label">Specific Survey Based Rewords Points</label>
                             <input type="number" min="1" name="reward_points" id="reward_points" class="form-control" value="{{ $rewardPoints }}">
                             @error('reward_points')
                                 <small class="text-danger">{{ $message }}</small>
