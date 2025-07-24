@@ -31,7 +31,7 @@ Route::get('/survey-config-delete/{id}', [SurveyConfigController::class, 'delete
 
 //Survey Response
 Route::get('/survey-result-list', [SurveyConfigController::class, 'getSurveyResults'])->name('surveyResults.getSurveyResults');
-
+Route::get('/survey-result-details', [SurveyConfigController::class, 'getSurveyResultsDetails'])->name('surveyResults.getSurveyResultsDetails');
 
 
 //Product list

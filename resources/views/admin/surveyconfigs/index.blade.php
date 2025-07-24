@@ -96,23 +96,23 @@
                                     </td>
                                     <td>
                                         @if($val->survey_notification_status == "enable")
-                                           <button class="btn btn-success btn-sm">{{ __('Enable') }}</button>
+                                           <span class="badge badge-success">{{__('Enable')}}</span>
                                         @else
-                                            <button class="btn btn-danger btn-sm">{{ __('Disable') }}</button>
+                                         <span class="badge badge-danger">{{__('Disable')}}</span>
                                         @endif
                                     </td>
                                     <!-- <td>{{ $val->custom_days}} </td> -->
                                     <td>
                                         @if($val->selected_email == "initial_email_send")
-                                              {{ __('Initial') }}
+                                               <span class="badge badge-info">{{__('Initial')}}</span>
                                         @endif
 
                                         @if($val->selected_email == "reminder")
-                                             {{ __('Reminder') }}
+                                              <span class="badge badge-warning">{{__('Reminder')}}</span>
                                         @endif
 
                                         @if($val->selected_email == "follow_up")
-                                             {{ __('Follow-up') }}
+                                              <span class="badge badge-primary">{{__('Follow-up')}}</span>
                                         @endif
                                     </td>
                                     <td>{{ $val->discount_code }}</td>
@@ -129,9 +129,9 @@
                                     <td>{{ $val->participation_points }}</td>
                                     <td>
                                         @if($val->status == "active")
-                                            <button class="btn btn-success btn-sm">{{__('Active')}}</button>
+                                            <span class="badge badge-success">{{__('Active')}}</span>
                                         @else
-                                            <button class="btn btn-danger btn-sm">{{__('InActive')}}</button>
+                                            <span class="badge badge-danger">{{__('InActive')}}</span>
                                         @endif
                                     </td>
                                     <td>{{ $val->created_at }}</td>

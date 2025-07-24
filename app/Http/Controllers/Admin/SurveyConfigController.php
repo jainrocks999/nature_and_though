@@ -204,7 +204,7 @@ class SurveyConfigController extends Controller
         if ($request->has('search') && $request->search != '') {
             $search = strtolower($request->search);
             $query->where(function($q) use ($search) {
-                $q->where('user_name', 'LIKE', "%$search%");
+                $q->OrWhere('user_name', 'LIKE', "%$search%");
                 $q->OrWhere('user_email', 'LIKE', "%$search%");
                 $q->OrWhere('user_phone', 'LIKE', "%$search%");
                 $q->OrWhere('survey_type', 'LIKE', "%$search%");
@@ -229,7 +229,34 @@ class SurveyConfigController extends Controller
     }
    
 
-    // public function getSurveyUserResults(Request $request){
-
-    // }
+    public function getSurveyResultsDetails(Request $request){
+        //dd($request->id);
+        $data = [];
+        $surveyConfigResponses = $this->configSurveyService->getSurveyResultByWhereId('id',$request->id);
+        if(isset($surveyConfigResponses) && !empty($surveyConfigResponses)){
+            if(isset($surveyConfigResponses) && !empty($surveyConfigResponses->id)){ 
+                $where['survey_id'] = $surveyConfigResponses->survey_id;
+                $pSuggestions = $this->configSurveyService->getProductSugByWhere($where);
+                $params =  [];
+                if(isset($pSuggestions)){
+                    foreach($pSuggestions as $key => $pSuggestion){
+                        $productIds = json_decode($pSuggestion->product_id);
+                        if($pSuggestion->min_score < $surveyConfigResponses->score && $pSuggestion->max_score >     $surveyConfigResponses->score){
+                            $products = $this->configSurveyService->getProductByWhereIds($productIds);     
+                            $data['product'] = $products;
+                            $data['product_min_score'] = $pSuggestion->min_score;       
+                            $data['product_max_score'] = $pSuggestion->max_score;       
+                        }
+                    }
+                }
+            }
+            $data['typeForms'] = $this->configSurveyService->getAllTypeForms();
+            $data['typeFormstypes'] = collect($data['typeForms'])->unique('type_form_type')->values();
+            $data['users'] = $this->configSurveyService->getAllUser();
+            return view('admin.surveyresults.views', compact('data', 'surveyConfigResponses','pSuggestions'));
+        }else{
+            session()->flash('error', 'Something went wrong.');
+            return redirect()->back()->withInput();
+        }
+    }
 }

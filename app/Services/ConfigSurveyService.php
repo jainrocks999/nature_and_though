@@ -71,8 +71,9 @@ class ConfigSurveyService
     public function getAllSurveyResult(){
         return $this->surveyConfigInterface->getAllSurveyResult();
     }
-    public function getSurveyResultByWhereId($where, $surveyId){
-        return $this->surveyConfigInterface->getSurveyResultByWhereId($where, $surveyId);
+  
+    public function getSurveyResultByWhereId($where, $surveyResultId){
+        return $this->surveyConfigInterface->getSurveyResultByWhereId($where, $surveyResultId);
     }
     public function getSurveyResultByWhere($where){
         return $this->surveyConfigInterface->getSurveyResultByWhere($where);
@@ -101,6 +102,9 @@ class ConfigSurveyService
     }
     public function getProductByWhereId($shopifyProductId){
         return $this->productInterface->getProductByWhereId($shopifyProductId);
+    }
+       public function getProductByWhereIds($shopifyProductId){
+        return $this->productInterface->getProductByWhereIds($shopifyProductId);
     }
     public function getProductByWhere($where){
         return $this->productInterface->getProductByWhere($where);

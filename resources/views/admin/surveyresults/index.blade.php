@@ -41,36 +41,81 @@
                             <th>Response Type</th>
                             <th>Response Time</th>
                             <th>Created At</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if(isset($results) && !empty($results[0]->id))
                             @foreach($results as $val)
                                 <tr>
-                                   <td>{{$val->id}}</td>
-                                   <td>{{$val->survey_type == 'pre_purchase' ? "Pre-Purchase" : "Post-Purchase";}}</td>
-                                   <td>{{$val->typeform_title}}</td>
-                                   <td>{{$val->typeform_type == 'quiz' ? 'Quiz' : ($val->typeform_type == 'score' ? 'Score' : 'Score Branching')}}</td>
-                                   <td>{{$val->user_name}}</td>
-                                   <td>{{$val->user_email}}</td>
-                                   <td>{{$val->user_phone}}</td>
-                                   <td>{{ $val->email_status == 'initial_email_send' ? 'Initial' : ($val->email_status == 'follow_up' ? 'Follow Up' : 'Reminder')}}</td>
-                                   <td>{{$val->pushnotification_status == 'Disable' ? "Disable" : "Enable";}}</td>
-                                   <td>{{$val->score}}</td>
-                                   <td>{{$val->discount_code}}</td>
-                                   <td>{{$val->discount_price}}</td>
-                                   <td>{{$val->reward_points}}</td>
-                                   <td>{{$val->response_type == 'completed' ? "Completed" : "Pending";}}</td>
-                                   <td>{{$val->response_time}}</td>
-                                   <td>{{$val->created_at}}</td>
+                                    <td>{{ $val->id }}</td>
+                                    <td>
+                                        {{ $val->survey_type == 'pre purchase' ? 'Pre-Purchase' : 'Post-Purchase' }}
+                                    </td>
+                                    <td>{{ $val->typeform_title }}</td>
+
+                                    {{-- typeform_type badge --}}
+                                    <td>
+                                        <span class="badge badge-primary">
+                                            {{ 
+                                                $val->typeform_type == 'quiz' ? 'Quiz' : 
+                                                ($val->typeform_type == 'score' ? 'Score' : 'Score Branching') 
+                                            }}
+                                        </span>
+                                    </td>
+
+                                    <td>{{ $val->user_name }}</td>
+                                    <td>{{ $val->user_email }}</td>
+                                    <td>{{ $val->user_phone }}</td>
+
+                                    {{-- email_status badge --}}
+                                    <td>
+                                        <span class="badge badge-{{ 
+                                            $val->email_status == 'initial_email_send' ? 'secondary' : 
+                                            ($val->email_status == 'follow_up' ? 'warning' : 'info') 
+                                        }}">
+                                            {{ 
+                                                $val->email_status == 'initial_email_send' ? 'Initial' : 
+                                                ($val->email_status == 'follow_up' ? 'Follow Up' : 'Reminder') 
+                                            }}
+                                        </span>
+                                    </td>
+
+                                    {{-- pushnotification_status badge --}}
+                                    <td>
+                                        <span class="badge badge-{{ $val->pushnotification_status == 'Disable' ? 'danger' : 'success' }}">
+                                            {{ $val->pushnotification_status }}
+                                        </span>
+                                    </td>
+
+                                    <td>{{ $val->score }}</td>
+                                    <td>{{ isset($val->discount_code) ? $val->discount_code : "-" }}</td>
+                                    <td>{{ isset($val->discount_price) ? $val->discount_price : "0" }}</td>
+                                    <td>{{ isset($val->reward_points) ? $val->reward_points : "0"  }}</td>
+
+                                    {{-- response_type badge --}}
+                                    <td>
+                                        <span class="badge badge-{{ $val->response_type == 'completed' ? 'success' : 'warning' }}">
+                                            {{ $val->response_type == 'completed' ? 'Completed' : 'Pending' }}
+                                        </span>
+                                    </td>
+
+                                    <td>{{ $val->response_time }}</td>
+                                    <td>{{ $val->created_at }}</td>
+                                    <td>
+                                        <a href="{{ route('surveyResults.getSurveyResultsDetails', ['id' => $val->id]) }}">
+                                            <i class="la la-eye"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
-                                <td id="msg"> No Results </td>
+                                <td id="msg" colspan="17" class="text-center text-muted">No Results</td>
                             </tr>
                         @endif
                     </tbody>
+
                 </table>
                  <div class="d-flex justify-content-center">
                     {{ $results->links() }}

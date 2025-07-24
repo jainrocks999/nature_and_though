@@ -24,6 +24,12 @@ class ProductRepository implements ProductInterface
         return Product::where('shopify_product_id',$shopifyProductId)->first();
     }
 
+    public function getProductByWhereIds($shopifyProductId) 
+    {
+        return Product::whereIn('shopify_product_id',$shopifyProductId)->get()->toArray();
+    }
+
+
      public function getProductByWhere($where) 
     {
         return Product::where($where)->get();

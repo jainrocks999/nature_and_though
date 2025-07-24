@@ -81,8 +81,8 @@ class WebhookController extends Controller
                 } 
                $params['survey_id'] = $surveyResults->id;
                $params['user_id'] = $uParams['user_id'];
-               $params['user_type'] = $surveyResults->user_type;
-               $params['survey_type'] = $surveyResults->survey_type;
+               $params['user_type'] = $surveyResults->user_type == "pre_purchase" ? "pre purchase" : "post purchase" ;
+               $params['survey_type'] = $surveyResults->survey_type == "pre_purchase" ? "pre purchase" : "post purchase";
                $params['user_name'] = $uParams['name'];
                $params['user_email'] = $uParams['email'];
                $params['user_phone'] = $uParams['phone_no'];
