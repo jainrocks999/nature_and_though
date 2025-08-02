@@ -17,7 +17,7 @@
 										<div class="col-7 d-flex align-items-center">
 											<div class="numbers">
 												<p class="card-category">Survey Attempt</p>
-												<h4 class="card-title">100</h4>
+												<h4 class="card-title">0</h4>
 											</div>
 										</div>
 									</div>
@@ -36,7 +36,7 @@
 										<div class="col-7 d-flex align-items-center">
 											<div class="numbers">
 												<p class="card-category">Total Users</p>
-												<h4 class="card-title">105</h4>
+												<h4 class="card-title">0</h4>
 											</div>
 										</div>
 									</div>
@@ -55,7 +55,7 @@
 										<div class="col-7 d-flex align-items-center">
 											<div class="numbers">
 												<p class="card-category">Subscribers</p>
-												<h4 class="card-title">1303</h4>
+												<h4 class="card-title">0</h4>
 											</div>
 										</div>
 									</div>
@@ -74,7 +74,7 @@
 										<div class="col-7 d-flex align-items-center">
 											<div class="numbers">
 												<p class="card-category">Order</p>
-												<h4 class="card-title">576</h4>
+												<h4 class="card-title">0</h4>
 											</div>
 										</div>
 									</div>

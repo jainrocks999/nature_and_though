@@ -107,6 +107,8 @@
                     </tr>
                      @if(isset($surveyResults['survey_result']) && !empty($surveyResults['survey_result']))
                         @foreach($surveyResults['survey_result'] as $val)
+                          @php $scor[] = $val->score; 
+                          @endphp
                         <tr>
                             <td>{{ $val->discount_code ?? 'N/A' }}</td>
                             <td>{{ ucfirst($val->discount_type) ?? 'N/A' }}</td>
@@ -131,23 +133,19 @@
                     </tr>
                     @if(isset($surveyResults['suggested_products']))
                         @foreach ($surveyResults['suggested_products'] as $productList)  
-                          @foreach($surveyResults['survey_result'] as $val)
-                            @if($productList['product_min_score'] < $val->score && $productList['product_max_score'] > $val->score )
-                                <tr>
-                                    <td>
-                                        @if (!empty($productList['product_image']))
-                                            <img src="{{ $productList['product_image'] ?? 'N/A' }}" alt="Product Image" height="100px" width="150px">
-                                        @else
-                                            N/A
-                                        @endif
-                                    </td>
-                                    <td>{{ $productList['product_title'] ?? 'N/A' }}</td>
-                                    <td>{{ $productList['product_sku'] ?? 'N/A' }}</td>
-                                    <td>{{ $productList['product_price'] ?? 'N/A' }}</td>
-                                    <td>{{ $productList['product_min_score'] }} - {{ $productList['product_max_score'] }}</td>
-                                </tr>
-                                @endif
-                            @endforeach
+                            <tr>
+                                <td>
+                                    @if (!empty($productList['product_image']))
+                                        <img src="{{ $productList['product_image'] ?? 'N/A' }}" alt="Product Image" height="100px" width="150px">
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+                                <td>{{ $productList['product_title'] ?? 'N/A' }}</td>
+                                <td>{{ $productList['product_sku'] ?? 'N/A' }}</td>
+                                <td>{{ $productList['product_price'] ?? 'N/A' }}</td>
+                                <td>{{ $productList['product_min_score'] }} - {{ $productList['product_max_score'] }}</td>
+                            </tr>
                         @endforeach
                     @else
                         <tr><td colspan="6">No Results</td></tr>

@@ -89,61 +89,6 @@
                             @enderror
                         </div>
                     </div>
-                  
-                    <!-- <div class="row mt-3">
-                        <div class="col-lg-12" id="subinpt">
-                            <label for="type_form_type" class="form-label">TypeForm Type</label>
-                           <select name="type_form_type" id="type_form_type" class="form-control">
-                                <option value="">Select TypeForm</option>
-                                @if(isset($data['typeFormstypes']) && !empty($data['typeFormstypes']))
-                                    @foreach($data['typeFormstypes'] as $val)
-                                        @if(!in_array($val->type_form_type, $shownTypes))
-                                            <option value="{{ $val->type_form_type }}" {{ old('type_form_type', $results->type_form_type ?? '') == $val->type_form_type ? 'selected' : '' }}>{{ $val->type_form_type }}</option>
-                                            @php $shownTypes[] = $val->type_form_type; @endphp
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </select>
-                            @error('type_form_type')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>  -->
-               
-                   
-
-
-                   <!-- <div class="row mt-3">
-                        <div class="col-lg-12">
-                            <label class="form-label"><h6>Email Config</h6> </label>
-                        </div>  
-                        <div class="col-lg-12" id="subinpt">
-                            <label class="form-label d-block">Choose Survey Email Send <span class="required-star">*</span></label>
-                            @php
-                                $selectedEmail = old('selected_email', $results->selected_email ?? '');
-                            @endphp
-
-                            <div class="form-check form-check-inline pb-0">
-                                <input class="form-check-input" type="radio" name="selected_email" id="initial_notification_id" value="initial_email_send" {{ $selectedEmail == 'initial_email_send' ? 'checked' : '' }}>
-                                <label class="form-check-label form-radio-sign" for="initial_notification_id">Initial Notification</label>
-                            </div>
-
-                            <div class="form-check form-check-inline pb-0">
-                                <input class="form-check-input" type="radio" name="selected_email" id="reminder_email_id" value="reminder" {{ $selectedEmail == 'reminder' ? 'checked' : '' }}>
-                                <label class="form-check-label form-radio-sign" for="reminder_email_id">Reminder</label>
-                            </div>
-
-                            <div class="form-check form-check-inline pb-0">
-                                <input class="form-check-input" type="radio" name="selected_email" id="follow_up_id" value="follow_up" {{ $selectedEmail == 'follow_up' ? 'checked' : '' }}>
-                                <label class="form-check-label form-radio-sign" for="follow_up_id">Follow-up</label>
-                            </div>
-
-                            @error('selected_email')
-                                <small class="text-danger d-block">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div> -->
-
                   @php
                         $surveyNotification = old('survey_notification_status', $results->survey_notification_status ?? '');
                          $notification_freq = old('notification_freq', $results->notification_freq ?? '');
@@ -329,6 +274,19 @@
                             </select>
                         </div>
 
+                        <div class="col-lg-3 discount-type-area d-none custom_tol">
+                            <label class="form-label">Discount For 
+                                <i class="la la-info-circle"></i>
+                                 <span class="custom-tooltip"><strong> All Users </strong>– A single coupon code that is applicable to all users.<br>
+                                  <strong>  User Specific </strong> – A distinct coupon code is generated individually for each user.</span> 
+                            </label>
+                            <select name="discount_user_type" class="form-control discount_for">
+                                <option value="">Select Type</option>
+                                <option value="all" {{ $discountStatus == 'all' ? 'selected' : '' }}>All User</option>
+                                <option value="unique" {{ $discountStatus == 'unique' ? 'selected' : '' }}>User Specific</option>
+                            </select>
+                        </div>
+
                         <div class="col-lg-3 discount-fields {{ $discountStatus == 'yes' ? '' : 'd-none' }}">
                             <label class="form-label">Discount Code</label>
                             <input type="text" name="discount_code" class="form-control discount-code" value="{{ $discountCode }}">
@@ -351,31 +309,7 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-
-                        <div class="col-lg-6">
-                            <label for="reward_points" class="form-label">Reword Point for Survey Result</label>
-                            <input type="number" min="1" name="reward_points" id="reward_points" class="form-control" value="{{ $rewardPoints }}">
-                            @error('reward_points')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
                     </div>
-                    <!-- <div class="row mt-3">
-                        <div class="col-lg-6" id="subinpt">
-                            <label class="form-label d-block">Status <span class="required-star">*</span></label>
-                            <div class="form-check form-check-inline pb-0">
-                                <input class="form-check-input" type="radio" name="status" id="status_active_id" value="active" {{ $status == 'active' ? 'checked' : '' }}>
-                                <label class="form-check-label form-radio-sign" for="status_active_id">Active</label>
-                            </div>
-                            <div class="form-check form-check-inline pb-0">
-                                <input class="form-check-input" type="radio" name="status" id="status_inactive_id" value="inactive" {{ $status == 'inactive' ? 'checked' : '' }}>
-                                <label class="form-check-label form-radio-sign" for="status_inactive_id">Inactive</label>
-                            </div>
-                            @error('status')
-                                <small class="text-danger d-block">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div> -->
                      <div class="row mt-2 mb-2">
                         <div class="col-lg-6" id="subinpt">
                             <div class="form-check form-check-inline pb-0">
@@ -383,10 +317,6 @@
                                 <input class="form-check-input" type="checkbox" name="status" id="status_active_id" value="{{ $status }}" {{ $status == 'active' ? 'checked' : '' }}>
                                 <label class="form-check-label form-check-sign" for="status_active_id">Active</label>
                             </div>
-                            <!-- <div class="form-check form-check-inline pb-0">
-                                <input class="form-check-input" type="radio" name="status" id="status_inactive_id" value="inactive" {{ old('status') == 'inactive' ? 'checked' : '' }}>
-                                <label class="form-check-label form-radio-sign" for="status_inactive_id">InActive</label>
-                            </div> -->
                             @error('status')
                                 <small class="text-danger d-block">{{ $message }}</small>
                             @enderror
@@ -405,6 +335,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
 <script>
    
@@ -447,7 +378,6 @@
             toggleCustomDays();
         });
     });
-   
 
     //Product section add working
     let productSelections = [];
@@ -548,6 +478,18 @@
             const $row = $(this).closest('.row');
             const discountCode = 'DSC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
             if ($(this).val()) {
+                $row.find('.discount-fields').removeClass('d-none');
+                $row.find('.discount-code').val(discountCode);
+            } else {
+                $row.find('.discount-fields').addClass('d-none');
+                $row.find('.discount-code').val('');
+                $row.find('.discount-value').val('');
+            }
+        });
+
+        $('.discount_for').on('change', function() {
+            const $row = $(this).closest('.row');
+            if ($(this).val() == 'all') {
                 $row.find('.discount-fields').removeClass('d-none');
                 $row.find('.discount-code').val(discountCode);
             } else {

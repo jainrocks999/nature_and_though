@@ -98,7 +98,7 @@ class SurveyConfigRepository implements SurveyConfigInterface
                         foreach($products as $proVal){
                             $proImages = json_decode($proVal->product_images, true);
                             $productImg = isset($proImages[0]['src']) ? $proImages[0]['src'] : '';
-                            $proData['product_id'] =  $proVal->product_title;
+                            $proData['product_id'] =  $proVal->shopify_product_id;
                             $proData['product_title'] =  $proVal->product_title;
                             $proData['product_sku'] =  $proVal->product_sku;
                             $proData['product_price'] =  $proVal->product_price;

@@ -147,7 +147,7 @@
                     <div id="product_suggestion_wrapper">   
                         <div class="row product-suggestion-item">
                             <div class="col-lg-4" id="subinpt">
-                                <label class="form-label">Selecte Products <span class="required-star">*</span></label>
+                                <label class="form-label">Select Products <span class="required-star">*</span></label>
                                 <select name="product_id[]" class="form-control product-select" multiple>
                                     @if(isset($data['products']) && !empty($data['products']))
                                         @foreach($data['products'] as $val)
@@ -208,12 +208,16 @@
                             </select>
                         </div>
 
-                        <div class="col-lg-3 discount-type-area d-none">
-                            <label class="form-label">Discount User Type</label>
-                            <select name="discount_user_type" class="form-control discount-type-select">
+                        <div class="col-lg-3 discount-type-area d-none custom_tol">
+                            <label class="form-label">Discount For  
+                                  <i class="la la-info-circle"  ></i>
+                                 <span class="custom-tooltip"><strong> All Users </strong>– A single coupon code that is applicable to all users.<br>
+                                  <strong>  User Specific </strong> – A distinct coupon code is generated individually for each user.</span> 
+                            </label>
+                            <select name="discount_user_type" class="form-control discount_for">
                                 <option value="">Select Type</option>
                                 <option value="all">All User</option>
-                                <option value="single">Specific User</option>
+                                <option value="unique">User Specific</option>
                             </select>
                         </div>
 
@@ -238,14 +242,6 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        <div class="col-lg-6">
-                            <label for="reward_points" class="form-label">Reword Point for Survey Result</label>
-                            <input type="number" min="1" name="reward_points" id="reward_points" class="form-control"
-                                value="{{ old('reward_points') }}">
-                            @error('reward_points')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
                     </div>
                     <div class="row mt-2 mb-2">
                         <div class="col-lg-6" id="subinpt">
@@ -254,10 +250,6 @@
                                 <input class="form-check-input" type="checkbox" name="status" id="status_active_id" value="active" checked {{ old('status') == 'active' ? 'checked' : '' }}>
                                 <label class="form-check-label form-check-sign" for="status_active_id">Active</label>
                             </div>
-                            <!-- <div class="form-check form-check-inline pb-0">
-                                <input class="form-check-input" type="radio" name="status" id="status_inactive_id" value="inactive" {{ old('status') == 'inactive' ? 'checked' : '' }}>
-                                <label class="form-check-label form-radio-sign" for="status_inactive_id">InActive</label>
-                            </div> -->
                             @error('status')
                                 <small class="text-danger d-block">{{ $message }}</small>
                             @enderror
@@ -387,6 +379,18 @@
             const $row = $(this).closest('.row');
             const discountCode = 'DSC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
             if ($(this).val()) {
+                $row.find('.discount-fields').removeClass('d-none');
+                $row.find('.discount-code').val(discountCode);
+            } else {
+                $row.find('.discount-fields').addClass('d-none');
+                $row.find('.discount-code').val('');
+                $row.find('.discount-value').val('');
+            }
+        });
+
+         $('.discount_for').on('change', function() {
+            const $row = $(this).closest('.row');
+            if ($(this).val() == 'all') {
                 $row.find('.discount-fields').removeClass('d-none');
                 $row.find('.discount-code').val(discountCode);
             } else {

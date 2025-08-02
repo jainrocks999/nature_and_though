@@ -21,7 +21,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-lg-2 d-flex align-items-center">
+                    <div class="col-lg-2 d-flex align-items-center justify-content-end mb-2">
                         <a   href="{{route('surveyConfig.createSurveyConfig')}}">
                             <button class="btn btn-success create-btn" id="refreshBtn"><i class="la la-plus"></i> Create</button>
                         </a>
