@@ -35,7 +35,7 @@ class ProductController extends Controller
         $sortField = $request->get('sort_by', 'id');
         $sortOrder = $request->get('order', 'desc');
         $query->orderBy($sortField, $sortOrder);
-        $results = $query->paginate(10)->appends($request->all());
+        $results = $query->paginate(100)->appends($request->all());
         return view('admin.products.index', compact('results'));
     }
 

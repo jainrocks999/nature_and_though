@@ -8,7 +8,37 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                     <li class="nav-item active">
+                        <a href="{{ route('surveyConfig.getSurveyConfig')}}">
+                            <i class="la la-gear"></i>
+                            <p>Survey Configuration</p>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="{{ route('typeform.getTypeFormData')}}">
+                            <i class="la la-refresh"></i>
+                            <p>Typeform Synchronization</p>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="{{ route('product.getProductList')}}">
+                            <i class="la la-refresh"></i>
+                            <p>Product Synchronization</p>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="{{ route('surveyResults.getSurveyResults')}}">
+                            <i class="la la-connectdevelop"></i>
+                            <p>View Survey Insights</p>
+                        </a>
+                    </li>
+                     <li class="nav-item active">
+                        <a href="{{ route('surveyResults.getUserSurveyResults')}}">
+                            <i class="la la-th-list"></i>
+                            <p>View User Journey</p>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
                         <a href="#submenuSurvey" data-toggle="collapse" aria-expanded="false" class="nav-link collapsed">
                             <i class="la la-gear"></i>
                             <p>Configure Survey </p>
@@ -25,13 +55,6 @@
                                 <li class="nav-item">
                                         <a class="nav-link" href="{{ route('product.getProductList')}}">Product List </a>
                                 </li>      
-                             
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link" href="manage-survey.html">Post-Purchase Survey </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="manage-survey.html">Post Survey Schedule</a>
-                                </li> -->
                             </ul>
                         </div>
                     </li>
@@ -44,20 +67,14 @@
                         <div class="collapse" id="submenuSurveyResponse">
                             <ul class="nav flex-column ml-3"> 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('surveyResults.getSurveyResults')}}">Survey Results </a>
-                                </li>   
-                                 <!-- <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('typeform.getTypeFormResponse')}}">TypeForm Response List</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="create-survey.html">Pre-Survey Response</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="manage-survey.html">Post-Survey Response</a>
-                                </li> -->
+                                    <a class="nav-link" href="{{ route('surveyResults.getSurveyResults')}}">All Survey Results </a>
+                                </li>  
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('surveyResults.getUserSurveyResults')}}">User Survey Results </a>
+                                </li>    
                             </ul>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>

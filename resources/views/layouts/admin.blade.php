@@ -79,19 +79,28 @@
 					</div>
 				</div>
 			</div> -->
-			@if(session('success'))
-				<div class="alert alert-success alert-dismissible fade show" role="alert">
-					{{ session('success') }}
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				</div>
-			@endif
-
-			@if(session('error'))
-				<div class="alert alert-danger alert-dismissible fade show" role="alert">
-					{{ session('error') }}
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				</div>
-			@endif
+			   <div class="row">
+                @foreach (['success', 'error', 'warning', 'info'] as $msg)
+                    @if(session($msg))
+                        <script>
+                            $(document).ready(function() {
+                                $.notify({
+                                    icon: 'la la-bell',
+                                    title: "{{ ucfirst($msg) }}",
+                                    message: "{{ session($msg) }}",
+                                },{
+                                    type: '{{ $msg }}',
+                                    placement: {
+                                        from: "bottom",
+                                        align: "right"
+                                    },
+                                    time: 1000,
+                                });
+                            });
+                        </script>
+                    @endif
+                @endforeach
+            </div>
 			<div class="main-panel">
 				<main>
 					@yield('content') 

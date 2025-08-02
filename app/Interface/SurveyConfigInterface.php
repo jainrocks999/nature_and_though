@@ -18,5 +18,8 @@ interface SurveyConfigInterface
     public function getSurveyResultByWhereId($where, $surveyId);
     public function getSurveyResultByWhere($where);
     public function createSurveyResult(array $createSurveyConfigDetails);
+
+    //User Survey Results
+    public function  getUserSurveyResults($userId);
     
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TypeForm;
 use Illuminate\Http\Request;
 use App\Models\SurveyConfig;
+use App\Models\User;
 use App\Models\SurveyResult;
 use App\Services\ConfigSurveyService;
 use App\Interface\TypeFormInterface;
@@ -61,12 +62,10 @@ class SurveyConfigController extends Controller
     public function storeSurveyConfig(Request $request)
     {
         $validated = $request->validate([
-            'user_type'           => 'required|in:pre_purchase,post_purchase',
+            'survey_type'         => 'required',
             'type_form_id'        => 'required|exists:survey_type_form_tbl,type_form_id',
-            'survey_type'         => 'required|in:pre_purchase,post_purchase',
-            'selected_email'      => 'required|in:initial_email_send,reminder,follow_up',
-            'survey_notification' => 'required|in:enable,disable',
-            'product_id.*'        => 'required|exists:product_tbl,shopify_product_id',
+            'survey_notification_status' => 'required',
+            'product_id.*'        => 'required',
             'min_score.*'        => 'required|numeric|min:0',
             'max_score.*'          => 'required|numeric|gte:min_score.*',
         ]);
@@ -121,67 +120,69 @@ class SurveyConfigController extends Controller
 
     //Survey Config update
     public function updateSurveyConfig(Request $request){
+
         $newRequest = Arr::except($request->all(), ['_token']);
+       
         $where = [];
         $where['type_form_id'] = $request->type_form_id;
         $typeForms = $this->configSurveyService->getTypeFormByWhere($where);
         $request->merge(['type_form_title' => $typeForms->title]);
         $setParams = $this->surveyConfig->setParam($newRequest);
         $results = $this->configSurveyService->updateSurveyConfig($request->input('survey_config_id'), $setParams);
+
+         //create product suggestion
+         $surveyId = $request->survey_config_id;
+         $selectedProId = $request->input('selected_product_value');
+         $selectedProIds = json_decode($selectedProId);
+         $minScores = $request->input('min_score', []);
+         $maxScores = $request->input('max_score', []);
+
+         $params = [];
+         foreach ($minScores as $i => $val) {
+             if(isset($val) || !empty($val) || $val != null && 
+                 !empty($selectedProIds[$i]) && !empty($minScores[$i]) && !empty($maxScores[$i])){
+                 $params['survey_id'] = $surveyId;
+                 $params['product_id'] = json_encode($selectedProIds[$i]);
+                 $params['min_score'] = $minScores[$i];
+                 $params['max_score'] = $maxScores[$i];
+                 $params['created_at'] = now();
+                $results = $this->configSurveyService->createProductSuggestion($params);
+             }
+         }
+         
+         // Remove product suggestion 
+         $removeIds = $request->input('remove_product', []);
+         if (!empty($removeIds)) {
+             foreach ($removeIds as $removeId) {
+                $results = $this->configSurveyService->deleteProductSug($removeId);
+             }
+         }
+
+         //Update product suggestion
+         $updateProductIds = $request->input('update_product_id', []);
+         $updateIds = $request->input('update_product_sug_id', []);
+         $minUpdated = $request->input('min_score_update', []);
+         $maxUpdated = $request->input('max_score_update', []);
+         if (!empty($updateIds)) {
+             foreach ($updateIds as $i => $updateId) {
+                 if(!empty($updateProductIds[$updateId]) && !empty($minUpdated[$i]) && !empty($maxUpdated[$i])){
+                    $results = $this->configSurveyService->updateProductSuggestion($updateId, [
+                         'product_id' => json_encode($updateProductIds[$updateId]) ?? null,
+                         'min_score'  => $minUpdated[$i] ?? null,
+                         'max_score'  => $maxUpdated[$i] ?? null,
+                         'updated_at' => now(),
+                     ]);
+                 }
+             }
+         }
+
         if (!empty($results)) {
-
-            //create product suggestion
-            $surveyId = $request->survey_config_id;
-            $selectedProId = $request->input('selected_product_value');
-            $selectedProIds = json_decode($selectedProId);
-            $minScores = $request->input('min_score', []);
-            $maxScores = $request->input('max_score', []);
-
-            $params = [];
-            foreach ($minScores as $i => $val) {
-                if(isset($val) || !empty($val) || $val != null && 
-                    !empty($selectedProId[$i]) && !empty($minScores[$i]) && !empty($maxScores[$i])){
-                    $params['survey_id'] = $surveyId;
-                    $params['product_id'] = json_encode($selectedProId[$i]);
-                    $params['min_score'] = $minScores[$i];
-                    $params['max_score'] = $maxScores[$i];
-                    $params['created_at'] = now();
-                    $this->configSurveyService->createProductSuggestion($params);
-                }
-            }
-            
-            // Remove product suggestion 
-            $removeIds = $request->input('remove_product', []);
-            if (!empty($removeIds)) {
-                foreach ($removeIds as $removeId) {
-                    $this->configSurveyService->deleteProductSug($removeId);
-                }
-            }
-
-            //Update product suggestion
-            $updateProductIds = $request->input('update_product_id', []);
-            $updateIds = $request->input('update_product_sug_id', []);
-            $minUpdated = $request->input('min_score_update', []);
-            $maxUpdated = $request->input('max_score_update', []);
-            if (!empty($updateIds)) {
-                foreach ($updateIds as $i => $updateId) {
-                    if(!empty($updateProductIds[$updateId]) && !empty($minUpdated[$i]) && !empty($maxUpdated[$i])){
-                        $this->configSurveyService->updateProductSuggestion($updateId, [
-                            'product_id' => json_encode($updateProductIds[$updateId]) ?? null,
-                            'min_score'  => $minUpdated[$i] ?? null,
-                            'max_score'  => $maxUpdated[$i] ?? null,
-                            'updated_at' => now(),
-                        ]);
-                    }
-                }
-            }
-
             session()->flash('success', 'Survey Configuration updated successfully.');
             return redirect()->route('surveyConfig.getSurveyConfig');
+        }else{
+            session()->flash('error', 'Something went wrong.');
+            return redirect()->back()->withInput();
         }
-
-        session()->flash('error', 'Something went wrong.');
-        return redirect()->back()->withInput();
     }
 
     //Survey Config delete 
@@ -222,6 +223,7 @@ class SurveyConfigController extends Controller
         $sortOrder = $request->get('order', 'desc');
         $query->orderBy($sortField, $sortOrder);
         $results = $query->paginate(10)->appends($request->all());
+       // dd($results);
         $data =  [];
         $data['typeFormLists'] = $this->configSurveyService->getAllTypeForms();
         $data['selected_typeform_id'] = isset($request->type_form_id) ? $request->type_form_id : "";
@@ -253,10 +255,55 @@ class SurveyConfigController extends Controller
             $data['typeForms'] = $this->configSurveyService->getAllTypeForms();
             $data['typeFormstypes'] = collect($data['typeForms'])->unique('type_form_type')->values();
             $data['users'] = $this->configSurveyService->getAllUser();
-            return view('admin.surveyresults.views', compact('data', 'surveyConfigResponses','pSuggestions'));
+            return view('admin.surveyresults.survey_result_details', compact('data', 'surveyConfigResponses','pSuggestions'));
         }else{
             session()->flash('error', 'Something went wrong.');
             return redirect()->back()->withInput();
         }
     }
+
+
+    //Survey Response
+    public function getUserSurveyResults(Request $request)
+    {
+       $ids = SurveyResult::selectRaw('MAX(id) as id')
+            ->groupBy('user_id')
+            ->pluck('id');
+
+        $query = SurveyResult::whereIn('id', $ids);
+
+        if ($request->has('search') && $request->search != '') {
+            $search = strtolower($request->search);
+            $query->where(function($q) use ($search) {
+                $q->orWhere('user_name', 'LIKE', "%$search%")
+                ->orWhere('user_email', 'LIKE', "%$search%")
+                ->orWhere('user_phone', 'LIKE', "%$search%");
+            });
+        }
+
+        $sortField = $request->get('sort_by', 'id');
+        $sortOrder = $request->get('order', 'desc');
+        $query->orderBy($sortField, $sortOrder);
+
+        $results = $query->paginate(10)->appends($request->all());
+        $data = [];
+        if(isset($results) && !empty($results)){
+            foreach($results as $key=> $val){
+                $surveyResults  =  $this->configSurveyService->getUserSurveyResults($val->user_id);
+                 $data['users'][] = $surveyResults;
+            }
+        }
+      //  dd($data['users']);
+        $data['typeFormLists'] = $this->configSurveyService->getAllTypeForms();
+        $data['selected_typeform_id'] = isset($request->type_form_id) ? $request->type_form_id : "";
+        return view('admin.surveyresults.user_result', compact('results', 'data'));
+    }
+
+
+    public function getUserSurveyResultsDetails(Request $request){
+        $surveyResults  =  $this->configSurveyService->getUserSurveyResults($request->id);
+        return view('admin.surveyresults.user_result_details', compact('surveyResults'));
+    }
+
+
 }

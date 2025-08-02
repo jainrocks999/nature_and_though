@@ -4,8 +4,10 @@
 	<div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="card-title">User Survey Results</div>
-                <div class="row">
+                <div class="card-title">Survey Insights Results</div>
+            </div>
+            <div class="card-body">
+                  <div class="row">
                     <div class="col-lg-12">
                         <form method="GET" action="">
                             <div class="row">
@@ -20,27 +22,18 @@
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="card-body">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Survey Type</th>
-                            <th>Typeform Title</th>
-                            <th>Typeform Type</th>
-                            <th>User Name</th>
-                            <th>User Email</th>
-                            <th>User Phone</th>
-                            <th>Email Status </th>
-                            <th>Push Notification Status</th>
-                            <th>Score</th>
-                            <th>Discount Code</th>
-                            <th>Discount Price</th>
-                            <th>Reward Points</th>
-                            <th>Response Type</th>
-                            <th>Response Time</th>
-                            <th>Created At</th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'id', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">#</a></th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'survey_type', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Survey Type</a></th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'typeform_title', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Typeform Name</a></th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'user_name', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">User Name</a></th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'user_email', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">User Email</a></th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'user_phone', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">User Phone</a></th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'score', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}"> Score </a></th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'reward_points', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Reward Points</a></th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'response_type', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Survey Attempt</a></th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -55,42 +48,11 @@
                                     <td>{{ $val->typeform_title }}</td>
 
                                     {{-- typeform_type badge --}}
-                                    <td>
-                                        <span class="badge badge-primary">
-                                            {{ 
-                                                $val->typeform_type == 'quiz' ? 'Quiz' : 
-                                                ($val->typeform_type == 'score' ? 'Score' : 'Score Branching') 
-                                            }}
-                                        </span>
-                                    </td>
-
+                                    
                                     <td>{{ $val->user_name }}</td>
                                     <td>{{ $val->user_email }}</td>
                                     <td>{{ $val->user_phone }}</td>
-
-                                    {{-- email_status badge --}}
-                                    <td>
-                                        <span class="badge badge-{{ 
-                                            $val->email_status == 'initial_email_send' ? 'secondary' : 
-                                            ($val->email_status == 'follow_up' ? 'warning' : 'info') 
-                                        }}">
-                                            {{ 
-                                                $val->email_status == 'initial_email_send' ? 'Initial' : 
-                                                ($val->email_status == 'follow_up' ? 'Follow Up' : 'Reminder') 
-                                            }}
-                                        </span>
-                                    </td>
-
-                                    {{-- pushnotification_status badge --}}
-                                    <td>
-                                        <span class="badge badge-{{ $val->pushnotification_status == 'Disable' ? 'danger' : 'success' }}">
-                                            {{ $val->pushnotification_status }}
-                                        </span>
-                                    </td>
-
                                     <td>{{ $val->score }}</td>
-                                    <td>{{ isset($val->discount_code) ? $val->discount_code : "-" }}</td>
-                                    <td>{{ isset($val->discount_price) ? $val->discount_price : "0" }}</td>
                                     <td>{{ isset($val->reward_points) ? $val->reward_points : "0"  }}</td>
 
                                     {{-- response_type badge --}}
@@ -100,8 +62,7 @@
                                         </span>
                                     </td>
 
-                                    <td>{{ $val->response_time }}</td>
-                                    <td>{{ $val->created_at }}</td>
+                                    <!-- <td>{{ $val->response_time }}</td> -->
                                     <td>
                                         <a href="{{ route('surveyResults.getSurveyResultsDetails', ['id' => $val->id]) }}">
                                             <i class="la la-eye"></i>
@@ -115,7 +76,6 @@
                             </tr>
                         @endif
                     </tbody>
-
                 </table>
                  <div class="d-flex justify-content-center">
                     {{ $results->links() }}

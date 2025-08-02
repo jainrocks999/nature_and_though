@@ -33,6 +33,9 @@ Route::get('/survey-config-delete/{id}', [SurveyConfigController::class, 'delete
 Route::get('/survey-result-list', [SurveyConfigController::class, 'getSurveyResults'])->name('surveyResults.getSurveyResults');
 Route::get('/survey-result-details', [SurveyConfigController::class, 'getSurveyResultsDetails'])->name('surveyResults.getSurveyResultsDetails');
 
+Route::get('/user-survey-results-list', [SurveyConfigController::class, 'getUserSurveyResults'])->name('surveyResults.getUserSurveyResults');
+Route::get('/user-survey-result-details', [SurveyConfigController::class, 'getUserSurveyResultsDetails'])->name('surveyResults.getUserSurveyResultsDetails');
+
 
 //Product list
 Route::get('/product-list', [ProductController::class, 'getProductList'])->name('product.getProductList');

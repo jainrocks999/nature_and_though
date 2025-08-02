@@ -82,8 +82,12 @@ class ConfigSurveyService
         return $this->surveyConfigInterface->createSurveyResult($createSurveyConfigDetails);
     }
 
+    //Survey User Results
+    public function  getUserSurveyResults($userId){
+         return $this->surveyConfigInterface->getUserSurveyResults($userId);
+    }
 
-
+    
 
 
     //Product method

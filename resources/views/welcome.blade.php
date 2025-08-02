@@ -16,8 +16,8 @@
 										</div>
 										<div class="col-7 d-flex align-items-center">
 											<div class="numbers">
-												<p class="card-category">Visitors</p>
-												<h4 class="card-title">1,294</h4>
+												<p class="card-category">Survey Attempt</p>
+												<h4 class="card-title">100</h4>
 											</div>
 										</div>
 									</div>
@@ -35,8 +35,8 @@
 										</div>
 										<div class="col-7 d-flex align-items-center">
 											<div class="numbers">
-												<p class="card-category">Sales</p>
-												<h4 class="card-title">$ 1,345</h4>
+												<p class="card-category">Total Users</p>
+												<h4 class="card-title">105</h4>
 											</div>
 										</div>
 									</div>

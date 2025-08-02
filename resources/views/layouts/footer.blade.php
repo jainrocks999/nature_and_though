@@ -15,5 +15,6 @@
 <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="assets/js/ready.min.js"></script>
-<script src="assets/js/demo.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
+<!-- <script src="assets/js/demo.js"></script> -->
 </html>

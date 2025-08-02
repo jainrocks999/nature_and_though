@@ -5,6 +5,9 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title" >Product List</div>
+                
+            </div>
+            <div class="card-body">
                 <div class="row">
                     <div class="col-lg-10">
                         <form method="GET" action="">
@@ -19,14 +22,12 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-2 d-flex align-items-center">
                         <a   href="{{route('product.getAllProductListShopify')}}">
                             <button class="btn btn-success create-btn" id="refreshBtn"><i class="la la-refresh"></i>Sync</button>
                         </a>
                     </div>
                 </div>
-            </div>
-            <div class="card-body">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -34,17 +35,6 @@
                               <th>Product Image</th>
                               <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'product_variants', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Product Sku</a></th>
                             <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'product_title', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Product Title</a></th>
-                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'product_type', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Product Type</a></th>
-                            <!-- <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'type_form_type', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Typeform Type</a></th>
-                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'created_at', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Typeform Response</a></th> -->
-                            <!-- <th>Last Updated</th> -->
-                            <!-- <th>#</th>
-                            <th>Images</th>
-                            <th>Sku</th>
-                            <th>Title</th>
-                            <th>Type</th> -->
-                            <th>Product Description</th>
-                            <th>Product Category</th>
                               <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'product_tag', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Product Tag</a></th>
                              <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'product_variants', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Product Price</a></th>
                             <th>Created At</th>
@@ -68,9 +58,6 @@
                                     <td><image src="{{$productImg}}" height="100px" width="150px"></td>
                                     <td>{{ $varient[0]->sku }}</td>
                                     <td>{{ $product->product_title }}</td>
-                                    <td>{{ $product->product_type }}</td>
-                                    <td>{{ Str::limit($cleanText, 50) }}</td>
-                                    <td>{{ isset($pCategories->name) ? $pCategories->name : "" }}</td>
                                     <td>{{ $product->product_tag }}</td>
                                     <td>{{ $varient[0]->price }}</td>
                                     <td>{{ $product->created_at }}</td>

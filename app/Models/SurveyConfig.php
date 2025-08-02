@@ -20,6 +20,7 @@ class SurveyConfig extends Model
         'selected_email',
         'discount_code',
         'discount_type',
+        'discount_user_type',
         'discount_value',
         'discount_status',
         'score',
@@ -37,14 +38,14 @@ class SurveyConfig extends Model
 
     public function setParam($postdata){
         return [
-            "user_type" => $postdata['user_type'],
+            // "user_type" => $postdata['user_type'],
             "type_form_id" => $postdata['type_form_id'],
             "type_form_type" => isset($postdata['type_form_type']) ? $postdata['type_form_type'] : '',
             "survey_type" => $postdata['survey_type'],
-            "selected_email" => $postdata['selected_email'],
+            // "selected_email" => $postdata['selected_email'],
             "survey_notification_status" => isset($postdata['survey_notification_status']) ? $postdata['survey_notification_status'] : 'disable',
             "notification_freq" => $postdata['notification_freq'],
-            "custom_days" => $postdata['custom_days'],
+            // "custom_days" => $postdata['custom_days'],
             "discount_status" => $postdata['discount_status'],
             "discount_type" => $postdata['discount_type'],
             "discount_code" => $postdata['discount_code'],

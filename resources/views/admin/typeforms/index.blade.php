@@ -4,7 +4,9 @@
 	<div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="card-title" >Typeform List Search</div>
+                <div class="card-title" >Typeform List</div>
+            </div>
+            <div class="card-body">
                 <div class="row">
                     <div class="col-lg-10">
                         <form method="GET" action="">
@@ -19,23 +21,20 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-2 d-flex align-items-center justify-content-end mb-2">
                         <a   href="{{route('typeform.cloneTypeFormData')}}">
                             <button class="btn btn-success create-btn" id="refreshBtn"><i class="la la-refresh"></i>Sync</button>
                         </a>
                     </div>
                 </div>
-            </div>
-            <div class="card-body">
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'id', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">#</a></th>
                             <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'type_form_id', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Typeform Id</a></th>
-                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'title', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Typeform Title</a></th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'title', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Typeform Name</a></th>
                             <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'type_form_type', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Typeform Type</a></th>
-                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'created_at', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Typeform Response</a></th>
-                            <th>Last Updated</th>
+                            <th><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'created_at', 'order' => (request('order') === 'asc' ? 'desc' : 'asc')]) }}">Created Date</a></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +46,6 @@
                                     <td>{{ $val->title }}</td>
                                     <td>{{ $val->type_form_type }}</td>
                                     <td>{{ $val->created_at }}</td>
-                                    <td>{{ $val->last_updated_at }}</td>
                                 </tr>
                             @endforeach
                         @else

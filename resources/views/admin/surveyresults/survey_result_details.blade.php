@@ -38,9 +38,9 @@
         <div class="card">
               <div class="card-body">
                     <div class="header">
-                        <h4>Survey Results</h4>
+                        <h4>Survey Insights Result Details</h4>
                         <!-- <p>Invoice ID: #{{ $surveyConfigResponses->id }}</p> -->
-                        <p>Date: {{ $surveyConfigResponses->created_at->format('Y-m-d') }}</p>
+                        <!-- <p>Date: {{ $surveyConfigResponses->created_at->format('Y-m-d') }}</p> -->
                     </div>
 
                  <div class="section">
@@ -50,13 +50,11 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th>User Type</th>
                         </tr>
                         <tr>
                             <td>{{ ucfirst($surveyConfigResponses->user_name) }}</td>
                             <td>{{ $surveyConfigResponses->user_email }}</td>
                             <td>{{ $surveyConfigResponses->user_phone }}</td>
-                            <td>{{ ucfirst($surveyConfigResponses->user_type) }}</td>
                         </tr>
                     </table>
                 </div>
@@ -66,15 +64,13 @@
                     <h5>Survey Information</h5>
                     <table>
                         <tr>
-                            <th>Survey ID</th>
                             <th>Survey Type</th>
-                            <th>Typeform Title</th>
+                            <th>Typeform Name</th>
                             <th>Typeform Type</th>
-                            <th>Response Type</th>
-                            <th>Response Time</th>
+                            <th>Survey Attempt</th>
+                            <th>Survey Time</th>
                         </tr>
                         <tr>
-                            <td>{{ $surveyConfigResponses->survey_id }}</td>
                             <td>{{ ucfirst($surveyConfigResponses->survey_type)}}</td>
                             <td>{{ $surveyConfigResponses->typeform_title }}</td>
                             <td>{{ ucfirst($surveyConfigResponses->typeform_type) }}</td>
@@ -92,7 +88,7 @@
                         <th>Discount Code</th>
                         <th>Discount Type</th>
                         <th>Discount Price</th>
-                        <th>Reward Points</th>
+                        <th>Reward Point Earned</th>
                         <th>Score</th>
                     </tr>
                     <tr>
@@ -147,24 +143,17 @@
                 <h5>Status & Notifications</h5>
                 <table>
                     <tr>
-                        <th>Email Sent</th>
-                        <th>Push Notification</th>
+                        <th>Push Notification & Email Send</th>
                         <th>Status</th>
-                        <th>Last Updated</th>
+                        <th>Created Date</th>
                     </tr>
                     <tr>
-                        <td>{{ $surveyConfigResponses->email_status ? 'Yes' : 'No' }}</td>
                         <td>{{ $surveyConfigResponses->pushnotification_status ? 'Yes' : 'No' }}</td>
                         <td>{{ ucfirst($surveyConfigResponses->status) }}</td>
                         <td>{{ $surveyConfigResponses->updated_at->format('Y-m-d H:i') }}</td>
                     </tr>
                 </table>
             </div>
-
-
-                    <div class="footer">
-                        Thank you for completing the survey.
-                    </div>
                 </div>
         </div>
     </div>
