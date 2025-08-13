@@ -132,7 +132,11 @@
                         <th>Score Range</th>
                     </tr>
                     @if(isset($surveyResults['suggested_products']))
-                        @foreach ($surveyResults['suggested_products'] as $productList)  
+                        @foreach ($surveyResults['suggested_products'] as $productList)
+                        @php
+                            $score = 16;
+                        @endphp
+                        @if($productList['product_min_score'] <= $score && $score <= $productList['product_max_score']) 
                             <tr>
                                 <td>
                                     @if (!empty($productList['product_image']))
@@ -146,6 +150,7 @@
                                 <td>{{ $productList['product_price'] ?? 'N/A' }}</td>
                                 <td>{{ $productList['product_min_score'] }} - {{ $productList['product_max_score'] }}</td>
                             </tr>
+                            @endif
                         @endforeach
                     @else
                         <tr><td colspan="6">No Results</td></tr>

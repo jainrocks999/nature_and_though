@@ -248,7 +248,7 @@
                             $discountType = old('discount_type', $results->discount_type ?? '');
                             $discountCode = old('discount_code', $results->discount_code ?? '');
                             $discountValue = old('discount_value', $results->discount_value ?? '');
-                            $participationPoints = old('participation_points', $results->participation_points ?? '');
+                            $participationPoints = old('reward_points', $results->reward_points ?? '');
                             $rewardPoints = old('reward_points', $results->reward_points ?? '');
                             $status = $results->status;
                         @endphp
@@ -303,9 +303,9 @@
                         </div>    
 
                         <div class="col-lg-6" id="subinpt">
-                            <label for="participation_points" class="form-label">Reward Point for Survey Participation </label>
-                            <input type="number" min="1" name="participation_points" id="participation_points" class="form-control" value="{{ $participationPoints }}">
-                            @error('participation_points')
+                            <label for="reward_points" class="form-label">Reward Point for Survey Participation </label>
+                            <input type="number" min="1" name="reward_points" id="reward_points" class="form-control" value="{{ $participationPoints }}">
+                            @error('reward_points')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -476,10 +476,10 @@
 
         $('.discount-type-select').on('change', function() {
             const $row = $(this).closest('.row');
-            const discountCode = 'DSC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            // const discountCode = 'DSC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
             if ($(this).val()) {
                 $row.find('.discount-fields').removeClass('d-none');
-                $row.find('.discount-code').val(discountCode);
+               // $row.find('.discount-code').val(discountCode);
             } else {
                 $row.find('.discount-fields').addClass('d-none');
                 $row.find('.discount-code').val('');
@@ -489,6 +489,7 @@
 
         $('.discount_for').on('change', function() {
             const $row = $(this).closest('.row');
+            const discountCode = 'DSC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
             if ($(this).val() == 'all') {
                 $row.find('.discount-fields').removeClass('d-none');
                 $row.find('.discount-code').val(discountCode);

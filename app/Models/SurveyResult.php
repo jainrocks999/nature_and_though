@@ -12,6 +12,7 @@ class SurveyResult extends Model
       'survey_id',
       'user_id',
       'user_type',
+      'typeform_id',
       'survey_type',
       'user_name',
       'user_email',

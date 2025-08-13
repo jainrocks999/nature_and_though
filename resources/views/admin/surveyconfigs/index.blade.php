@@ -106,8 +106,8 @@
                                         @endif 
                                     </td>
                                     <td>
-                                        @if(isset($val->participation_points) && $val->participation_points > 0)
-                                            {{ $val->participation_points }}
+                                        @if(isset($val->reward_points) && $val->reward_points > 0)
+                                            {{ $val->reward_points }}
                                         @else
                                             {{ __('0') }}
                                         @endif 

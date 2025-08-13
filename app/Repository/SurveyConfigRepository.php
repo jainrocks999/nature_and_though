@@ -8,6 +8,7 @@ use App\Models\SurveyResult;
 use App\Models\ProductSuggestion;
 use App\Models\Product;
 use App\Models\User;
+use DB;
 
 class SurveyConfigRepository implements SurveyConfigInterface 
 {
@@ -70,22 +71,20 @@ class SurveyConfigRepository implements SurveyConfigInterface
     
 
     //User Survey results
-    public function getUserSurveyResults($userId){
+    public function getUserSurveyResults_old($userId){
        $params = [];
 
+       $user = User::where('id',$userId)->first();
        $surveyConfigs = SurveyConfig::where('status','active')->get();
        $surveyConfigsCount = $surveyConfigs->count();
 
        $surveyResults = SurveyResult::where('user_id',$userId)->get();
        $surveyResultsCount = $surveyResults->count();
-
-       $surveyResultsIds = SurveyResult::where('user_id',$userId)->pluck('survey_id');
-   
-       $user = User::where('id',$userId)->first();
        $rewardPoints = $surveyResults->sum('reward_points');
-       $participtionPoints = $surveyResults->sum('participation_points');
+       $participtionPoints = $surveyResults->sum('reward_points');
        $total = $surveyResults->sum('score');
 
+       $surveyResultsIds = SurveyResult::where('user_id',$userId)->pluck('survey_id');
        $productSuggestion = ProductSuggestion::whereIn('survey_id',$surveyResultsIds)->get();
        if($productSuggestion){
            $product_suggestions = [];
@@ -112,6 +111,8 @@ class SurveyConfigRepository implements SurveyConfigInterface
             }
                 
         }
+
+
        $params['total_survey'] =  $surveyConfigsCount;
        $params['complete_survey'] = $surveyResultsCount;
        $params['incomplete_survey'] = $surveyConfigsCount - $surveyResultsCount;
@@ -127,5 +128,70 @@ class SurveyConfigRepository implements SurveyConfigInterface
        return $params;
     }
 
+    public function getUserSurveyResults($userId){
+       $params = [];
 
+    //    $getSurveyResults = DB::table('survey_response_tbl as sr')
+    //             ->join('survey_product_suggestion_tbl as sps', 'sr.survey_id', '=', 'sps.survey_id')
+    //             ->join('survey_config_tbl as sc', 'sps.survey_id', '=', 'sc.id')
+    //             ->select('sr.*','sr.score as result_score', 'sps.*', 'sc.*')
+    //             ->where('sr.user_id',$userId)
+    //             ->get();
+    //     dd($getSurveyResults);
+        $surveyResults = SurveyResult::where('user_id',$userId)->get();
+
+
+       $user = User::where('id',$userId)->first();
+       $surveyConfigs = SurveyConfig::where('status','active')->get();
+       $surveyConfigsCount = $surveyConfigs->count();
+
+       $surveyResults = SurveyResult::where('user_id',$userId)->get();
+       $surveyResultsCount = $surveyResults->count();
+       $rewardPoints = $surveyResults->sum('reward_points');
+       $participtionPoints = $surveyResults->sum('reward_points');
+       $total = $surveyResults->sum('score');
+
+       $surveyResultsIds = SurveyResult::where('user_id',$userId)->pluck('survey_id');
+       $productSuggestion = ProductSuggestion::whereIn('survey_id',$surveyResultsIds)->get();
+       if($productSuggestion){
+           $product_suggestions = [];
+           $proData = [];
+            if (!empty($productSuggestion)) {
+                foreach ($productSuggestion as $pSuggestion) {
+                    $productIds = json_decode($pSuggestion->product_id, true);
+                    if (!empty($productIds)) {
+                        $products = Product::whereIn('shopify_product_id', $productIds)->get();
+                        foreach($products as $proVal){
+                            $proImages = json_decode($proVal->product_images, true);
+                            $productImg = isset($proImages[0]['src']) ? $proImages[0]['src'] : '';
+                            $proData['product_id'] =  $proVal->shopify_product_id;
+                            $proData['product_title'] =  $proVal->product_title;
+                            $proData['product_sku'] =  $proVal->product_sku;
+                            $proData['product_price'] =  $proVal->product_price;
+                            $proData['product_image'] =  $productImg;
+                            $proData['product_min_score'] = $pSuggestion->min_score;
+                            $proData['product_max_score'] = $pSuggestion->max_score;
+                            $params['suggested_products'][] = $proData;
+                        }
+                    }
+                }
+            }
+                
+        }
+
+
+       $params['total_survey'] =  $surveyConfigsCount;
+       $params['complete_survey'] = $surveyResultsCount;
+       $params['incomplete_survey'] = $surveyConfigsCount - $surveyResultsCount;
+       $params['total_score'] =  $surveyResults->sum('score');
+       $params['total_reward_points'] =  $participtionPoints + $rewardPoints;
+       $params['user_id'] = $user->id;
+       $params['user_name'] = $user->name;
+       $params['user_email'] = $user->email;
+       $params['user_phone'] = $user->phone_no;
+       $params['survey_result'] = $surveyResults;
+       $params['survey_configs'] = $surveyConfigs;
+       $params['product_suggestions'] = $productSuggestion;
+       return $params;
+    }
 }

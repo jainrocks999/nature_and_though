@@ -42,6 +42,7 @@
                     </thead>
                     <tbody>
                             @forelse ($results as $index => $product)
+                           
                                 @php 
                                     $prod = $product->product_desc;
                                     $clean = str_replace("\u{A0}", ' ', $prod);
@@ -50,18 +51,20 @@
                                     $cleanText = trim(preg_replace('/\s+/', ' ', $cleanText));
                                     $varient = json_decode($product->product_variants);
                                     $pimages = json_decode($product->product_images);
-                                    $productImg = isset($pimages[$index]->src) ? $pimages[$index]->src : '';
+                                    $productImg = isset($pimages[0]->src) ? $pimages[0]->src : '';
                                     $pCategories = json_decode($product->product_category);
                                 @endphp
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td><image src="{{$productImg}}" height="100px" width="150px"></td>
-                                    <td>{{ $varient[0]->sku }}</td>
-                                    <td>{{ $product->product_title }}</td>
-                                    <td>{{ $product->product_tag }}</td>
-                                    <td>{{ $varient[0]->price }}</td>
-                                    <td>{{ $product->created_at }}</td>
-                                </tr>
+                                    @if($varient[0]->price > 0)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td><image src="{{$productImg}}" height="100px" width="150px"></td>
+                                        <td>{{ $varient[0]->sku }}</td>
+                                        <td>{{ $product->product_title }}</td>
+                                        <td>{{ $product->product_tag }}</td>
+                                        <td>{{ $varient[0]->price }}</td>
+                                        <td>{{ $product->created_at }}</td>
+                                    </tr>
+                                    @endif
                             @empty
                                 <tr>
                                     <td colspan="13" class="text-center">No products found.</td>

@@ -208,25 +208,25 @@ class SurveyConfigController extends Controller
                 $q->OrWhere('user_name', 'LIKE', "%$search%");
                 $q->OrWhere('user_email', 'LIKE', "%$search%");
                 $q->OrWhere('user_phone', 'LIKE', "%$search%");
-                $q->OrWhere('survey_type', 'LIKE', "%$search%");
-                $q->OrWhere('typeform_title', 'LIKE', "%$search%");
-                $q->OrWhere('email_status', 'LIKE', "%$search%");
-                $q->OrWhere('discount_code', 'LIKE', "%$search%");
-                $q->OrWhere('discount_type', 'LIKE', "%$search%");
-                $q->OrWhere('score', 'LIKE', "%$search%");
-                $q->OrWhere('reward_points', 'LIKE', "%$search%");
-                $q->OrWhere('response_type', 'LIKE', "%$search%");
-                $q->OrWhere('status', 'LIKE', "%$search%");
             });
         }
+
+        if ($request->filled('typeform_id')) {
+            $query->where('typeform_id', $request->typeform_id);
+        }
+
+        if ($request->filled('survey_type')) {
+            $query->where('survey_type', $request->survey_type);
+        }
+
         $sortField = $request->get('sort_by', 'id');
         $sortOrder = $request->get('order', 'desc');
         $query->orderBy($sortField, $sortOrder);
         $results = $query->paginate(10)->appends($request->all());
-       // dd($results);
         $data =  [];
         $data['typeFormLists'] = $this->configSurveyService->getAllTypeForms();
-        $data['selected_typeform_id'] = isset($request->type_form_id) ? $request->type_form_id : "";
+        $data['selected_typeform_id'] = isset($request->typeform_id) ? $request->typeform_id : "";
+        $data['select_survey_type'] = isset($request->survey_type) ? $request->survey_type : "";
         return view('admin.surveyresults.index', compact('results', 'data'));
     }
    
@@ -246,6 +246,7 @@ class SurveyConfigController extends Controller
                         if($pSuggestion->min_score < $surveyConfigResponses->score && $pSuggestion->max_score >     $surveyConfigResponses->score){
                             $products = $this->configSurveyService->getProductByWhereIds($productIds);     
                             $data['product'] = $products;
+                            $data['score'] = $surveyConfigResponses->score;       
                             $data['product_min_score'] = $pSuggestion->min_score;       
                             $data['product_max_score'] = $pSuggestion->max_score;       
                         }
@@ -255,7 +256,7 @@ class SurveyConfigController extends Controller
             $data['typeForms'] = $this->configSurveyService->getAllTypeForms();
             $data['typeFormstypes'] = collect($data['typeForms'])->unique('type_form_type')->values();
             $data['users'] = $this->configSurveyService->getAllUser();
-            return view('admin.surveyresults.survey_result_details', compact('data', 'surveyConfigResponses','pSuggestions'));
+            return view('admin.surveyresults.survey_result_details', compact('data','surveyConfigResponses','pSuggestions'));
         }else{
             session()->flash('error', 'Something went wrong.');
             return redirect()->back()->withInput();
@@ -281,10 +282,17 @@ class SurveyConfigController extends Controller
             });
         }
 
+        if ($request->filled('typeform_id')) {
+            $query->where('typeform_id', $request->typeform_id);
+        }
+
+        if ($request->filled('survey_type')) {
+            $query->where('survey_type', $request->survey_type);
+        }
+
         $sortField = $request->get('sort_by', 'id');
         $sortOrder = $request->get('order', 'desc');
         $query->orderBy($sortField, $sortOrder);
-
         $results = $query->paginate(10)->appends($request->all());
         $data = [];
         if(isset($results) && !empty($results)){
@@ -295,13 +303,17 @@ class SurveyConfigController extends Controller
         }
       //  dd($data['users']);
         $data['typeFormLists'] = $this->configSurveyService->getAllTypeForms();
-        $data['selected_typeform_id'] = isset($request->type_form_id) ? $request->type_form_id : "";
+         $data['selected_typeform_id'] = isset($request->typeform_id) ? $request->typeform_id : "";
+        $data['select_survey_type'] = isset($request->survey_type) ? $request->survey_type : "";
         return view('admin.surveyresults.user_result', compact('results', 'data'));
     }
 
 
     public function getUserSurveyResultsDetails(Request $request){
         $surveyResults  =  $this->configSurveyService->getUserSurveyResults($request->id);
+        //dd($surveyResults);
+        
+        
         return view('admin.surveyresults.user_result_details', compact('surveyResults'));
     }
 

@@ -14,6 +14,26 @@
                                 <div class="col-md-4">
                                     <input type="text" name="search" class="form-control" placeholder="Search..." value="{{ request('search') }}">
                                 </div>
+                                  <!-- <div class="col-md-3">
+                                    <select name="typeform_id" class="form-control">
+                                    @if (!empty($data['typeFormLists']))
+                                        <option value="">Select Typeform</option>
+                                        @foreach ($data['typeFormLists'] as $val)
+                                            <option value="{{ $val->id }}" 
+                                                {{ isset($data['selected_typeform_id']) && $data['selected_typeform_id'] == $val->id ? 'selected' : '' }}>
+                                                {{ $val->title }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                </div>
+                                 <div class="col-md-3">
+                                     <select name="survey_type" class="form-control">
+                                        <option value="">Select Survey Type</option>
+                                        <option value="pre_purchase" {{ (isset($data['select_survey_type']) && $data['select_survey_type'] === 'pre_purchase') ? 'selected' : '' }}>Pre-Purchase</option>
+                                        <option value="post_purchase" {{ (isset($data['select_survey_type']) && $data['select_survey_type'] === 'post_purchase') ? 'selected' : '' }}>Post-Purchase</option>
+                                    </select>
+                                </div> -->
                                 <div class="col-md-4">
                                     <button type="submit" class="btn btn-primary">Search</button>
                                     <a href="{{ route('surveyResults.getUserSurveyResults') }}" class="btn btn-secondary">Reset</a>
