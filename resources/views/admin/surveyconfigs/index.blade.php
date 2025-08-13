@@ -45,7 +45,7 @@
                             <th>Discount Price</th>
                             <th>Score</th> -->
                             <th>Reward Point for Survey Participation</th>
-                            <th>Reword Point for Survey Result</th>
+                            <!-- <th>Reword Point for Survey Result</th> -->
                             <th>Status</th>
                             <!-- <th>Created At</th> -->
                             <th>Action</th>
@@ -57,7 +57,7 @@
                                 <tr>
                                     <td>{{ $val->id }}</td>
                                     <td>
-                                        @if($val->user_type == "pre_purchase")
+                                        @if($val->survey_type == "pre_purchase")
                                              {{ __('Pre-Purchase') }}
                                         @else
                                             {{ __('Post-Purchase') }}
@@ -98,13 +98,13 @@
                                     </td>
                                     <td>{{ $val->discount_value }}</td>
                                     <td>{{ $val->score }}</td> -->
-                                    <td>  
+                                    <!-- <td>  
                                         @if(isset($val->reward_points) && $val->reward_points > 0)
                                             {{ $val->reward_points }}
                                         @else
                                             {{ __('0') }}
                                         @endif 
-                                    </td>
+                                    </td> -->
                                     <td>
                                         @if(isset($val->reward_points) && $val->reward_points > 0)
                                             {{ $val->reward_points }}

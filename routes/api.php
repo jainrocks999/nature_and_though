@@ -15,4 +15,4 @@ Route::post('/webhooks/typeform', [WebhookController::class, 'typeFormWebhooksHa
 Route::post('/webhooks/shopify-order-handle', [WebhookController::class, 'shopifyOrderWebhooksHandle']);
 Route::post('/webhooks/shopify-customer-handle', [WebhookController::class, 'shopifyCustomerWebhooksHandle']);
 Route::post('/webhooks/shopify-product-handle', [WebhookController::class, 'shopifyProductWebhooksHandle']);
-
+Route::post('/webhooks/typeform-url-set', [WebhookController::class, 'setTypeFormUrl']);

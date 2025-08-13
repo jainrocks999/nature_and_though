@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\TypeForm;
 use App\Models\TypeformResponse;
 use App\Services\WebHookServices;
 use App\Services\MasterService;
@@ -182,4 +183,24 @@ class WebhookController extends Controller
         }
         return $results;
     }
+
+
+    public function setTypeFormUrl(Request $request){
+        $typeFromResults =  $this->masterService->getTypeFormData($request->all());
+        if(isset($typeFromResults) && !empty($typeFromResults->items)){
+          $obj = new TypeForm();
+          foreach($typeFromResults->items as $item){
+            $params = [
+                'url'=>$request->url,
+                'form_id'=>$item->id,
+                'tag'=>true
+            ];
+           $results = $this->masterService->setTypeFormUrl($params);
+          }
+        }
+        return $results;
+    }
+
+
+
 }

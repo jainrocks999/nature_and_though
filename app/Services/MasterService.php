@@ -36,6 +36,44 @@ class MasterService
         return $results;
     }
 
+    //typeform url set
+    function setTypeFormUrl($postData)
+    {
+        if (empty($postData['url']) || empty($postData['form_id']) || empty($postData['tag'])) {
+           return 'Missing required parameters: url, form_id, or tag.';
+        }
+        $payload = json_encode([
+            'url' => $postData['url'],
+            'enabled' => true
+        ]);
+
+        $webhookUrl = 'https://api.typeform.com/forms/' . $postData['form_id'] . '/webhooks/' . $postData['tag'];
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $webhookUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => $payload,
+            CURLOPT_HTTPHEADER => [
+                'Authorization: Bearer ' . $this->accessToken,
+                'Content-Type: application/json',
+            ],
+        ]);
+        $response = curl_exec($curl);
+        $error = curl_error($curl);
+        curl_close($curl);
+        if ($error) {
+            throw new Exception("cURL Error: $error");
+        }
+        return $response; 
+    }
+
+
 
     //Clone TypeForm data
     function getTypeFormData(){
