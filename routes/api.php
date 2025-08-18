@@ -2,6 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiTypeFormController;
+use App\Http\Controllers\Api\ApiSurveyResultController;
 use App\Http\Controllers\Api\WebhookController;
 
 
@@ -16,3 +17,4 @@ Route::post('/webhooks/shopify-order-handle', [WebhookController::class, 'shopif
 Route::post('/webhooks/shopify-customer-handle', [WebhookController::class, 'shopifyCustomerWebhooksHandle']);
 Route::post('/webhooks/shopify-product-handle', [WebhookController::class, 'shopifyProductWebhooksHandle']);
 Route::post('/webhooks/typeform-url-set', [WebhookController::class, 'setTypeFormUrl']);
+Route::get('/webhooks/user-survey-results', [ApiSurveyResultController::class, 'getUserSurveyResult']);
